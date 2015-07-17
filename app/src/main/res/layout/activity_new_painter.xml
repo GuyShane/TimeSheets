@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.shane.timesheets.views.NewPainterActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/text_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="22sp"
+        android:textColor="@color/text_title"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@+id/text_name"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wage"
+        android:id="@+id/text_wage"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="22sp"
+        android:textColor="@color/text_title"
+        android:layout_below="@+id/edit_name"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:id="@+id/edit_wage"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@+id/text_wage"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_check"
+        android:src="@drawable/selector_check"
+        android:onClick="onClickCheck"
+        android:background="#00000000"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="52dp"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_cancel"
+        android:src="@drawable/selector_cancel"
+        android:onClick="onClickCancel"
+        android:background="#00000000"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/button_menu"
+        android:layout_marginEnd="52dp"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_menu"
+        android:onClick="onClickMenu"
+        android:src="@drawable/selector_menu"
+        android:background="#00000000"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

@@ -1,0 +1,210 @@
+package com.shane.timesheets;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import com.shane.timesheets.models.Job;
+import com.shane.timesheets.models.Painter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
+
+    private static final String DB_NAME="app.db";
+
+    public DatabaseHelper(Context ctx) {
+        super(ctx,DB_NAME,null,1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(DatabaseContract.Painters.CREATE);
+        db.execSQL(DatabaseContract.Jobs.CREATE);
+        db.execSQL(DatabaseContract.WorkDays.CREATE);
+        db.execSQL(DatabaseContract.JobPainters.CREATE);
+        db.execSQL(DatabaseContract.PainterDays.CREATE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    public boolean insertJob(Job job) {
+        boolean inserted=true;
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues c=new ContentValues();
+        c.put(DatabaseContract.Jobs.COLUMN_TITLE,job.getTitle());
+        c.put(DatabaseContract.Jobs.COLUMN_ADDRESS,job.getAddress());
+        c.put(DatabaseContract.Jobs.COLUMN_START_DATE,job.getStartDateString());
+        c.put(DatabaseContract.Jobs.COLUMN_END_DATE,job.getEndDateString());
+        c.put(DatabaseContract.Jobs.COLUMN_COST,job.getCost());
+        try {
+            db.insertOrThrow(DatabaseContract.Jobs.TABLE_NAME,null,c);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            inserted=false;
+        }
+        return inserted;
+    }
+
+    public List<Job> getAllJobs(int completed) {
+        List<Job> jobs=new ArrayList<>();
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select * from " + DatabaseContract.Jobs.TABLE_NAME +
+                " where " + DatabaseContract.Jobs.COLUMN_COMPLETED +
+                "="+completed, null);
+        r.moveToFirst();
+        while (!r.isAfterLast()) {
+            int id=r.getInt(r.getColumnIndex(DatabaseContract.Jobs._ID));
+            String title=r.getString(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_TITLE));
+            String address=r.getString(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_ADDRESS));
+            String start=r.getString(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_START_DATE));
+            String end=r.getString(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_END_DATE));
+            double cost=r.getDouble(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_COST));
+            jobs.add(new Job(id,title,address,start,end,cost));
+            r.moveToNext();
+        }
+        r.close();
+        return jobs;
+    }
+
+    public Job getJob(int id) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select * from " + DatabaseContract.Jobs.TABLE_NAME +
+                " where " + DatabaseContract.Jobs._ID +
+                "=" + id, null);
+        r.moveToFirst();
+        String title=r.getString(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_TITLE));
+        String address=r.getString(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_ADDRESS));
+        String start=r.getString(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_START_DATE));
+        String end=r.getString(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_END_DATE));
+        double cost=r.getDouble(r.getColumnIndex(DatabaseContract.Jobs.COLUMN_COST));
+        r.close();
+        return new Job(title,address,start,end,cost);
+    }
+
+    public double getTotalCost(int job) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select " + DatabaseContract.PainterDays.COLUMN_PAINTER +
+                "," + DatabaseContract.PainterDays.COLUMN_HOURS + " from " +
+                DatabaseContract.PainterDays.TABLE_NAME + " where " +
+                DatabaseContract.PainterDays.COLUMN_DATE + " in (select " +
+                DatabaseContract.WorkDays._ID + " from " + DatabaseContract.WorkDays.TABLE_NAME +
+                " where " + DatabaseContract.WorkDays.COLUMN_JOB + "=" + job + ");", null);
+        r.moveToFirst();
+        double total=0;
+        while (!r.isAfterLast()) {
+            int painter=r.getInt(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_PAINTER));
+            double hours=r.getDouble(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_HOURS));
+            total+=hours*getWage(painter);
+            r.moveToNext();
+        }
+        r.close();
+        return total;
+    }
+
+    public double getWage(int painter) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select "+ DatabaseContract.Painters.COLUMN_WAGE+
+                " from "+ DatabaseContract.Painters.TABLE_NAME+
+                " where "+ DatabaseContract.Painters._ID+"="+painter+";",null);
+        r.moveToFirst();
+        double wage=r.getDouble(r.getColumnIndex(DatabaseContract.Painters.COLUMN_WAGE));
+        r.close();
+        return wage;
+    }
+
+    public int getDaysWorked(int job) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select count(*) from "+ DatabaseContract.WorkDays.TABLE_NAME+
+                " where "+ DatabaseContract.WorkDays.COLUMN_JOB+"="+job,null);
+        r.moveToFirst();
+        int days;
+        if (r.getCount()>0 && r.getColumnCount()>0) {
+            days=r.getInt(0);
+        }
+        else {
+            days=0;
+        }
+        r.close();
+        return days;
+    }
+
+    public boolean insertPainter(Painter painter) {
+        boolean inserted=true;
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues c=new ContentValues();
+        c.put(DatabaseContract.Painters.COLUMN_NAME,painter.getName());
+        c.put(DatabaseContract.Painters.COLUMN_WAGE, painter.getWage());
+        try {
+            db.insertOrThrow(DatabaseContract.Painters.TABLE_NAME,null,c);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            inserted=false;
+        }
+        return inserted;
+    }
+
+    public List<Painter> getAllPainters() {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select * from " + DatabaseContract.Painters.TABLE_NAME + ";", null);
+        r.moveToFirst();
+        List<Painter> painters=new ArrayList<>();
+        while (!r.isAfterLast()) {
+            int id=r.getInt(r.getColumnIndex(DatabaseContract.Painters._ID));
+            String name=r.getString(r.getColumnIndex(DatabaseContract.Painters.COLUMN_NAME));
+            double wage=r.getDouble(r.getColumnIndex(DatabaseContract.Painters.COLUMN_WAGE));
+            painters.add(new Painter(id,name,wage));
+            r.moveToNext();
+        }
+        r.close();
+        return painters;
+    }
+
+    public List<Painter> getPainters(int job) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select * from "+ DatabaseContract.Painters.TABLE_NAME+
+                " where "+ DatabaseContract.Painters._ID+" in (select "+
+                DatabaseContract.JobPainters.COLUMN_PAINTER+" from "+
+                DatabaseContract.JobPainters.TABLE_NAME+" where "+
+                DatabaseContract.JobPainters.COLUMN_JOB+"="+job+");",null);
+        r.moveToFirst();
+        List<Painter> painters=new ArrayList<>();
+        while (!r.isAfterLast()) {
+            int id=r.getInt(r.getColumnIndex(DatabaseContract.Painters._ID));
+            String name=r.getString(r.getColumnIndex(DatabaseContract.Painters.COLUMN_NAME));
+            double wage=r.getDouble(r.getColumnIndex(DatabaseContract.Painters.COLUMN_WAGE));
+            painters.add(new Painter(id,name,wage));
+            r.moveToNext();
+        }
+        r.close();
+        return painters;
+    }
+
+    public List<Painter> getPaintersNotOnJob(int job) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select * from "+ DatabaseContract.Painters.TABLE_NAME+
+                " where "+ DatabaseContract.Painters._ID+" not in (select "+
+                DatabaseContract.JobPainters.COLUMN_PAINTER+" from "+
+                DatabaseContract.JobPainters.TABLE_NAME+" where "+
+                DatabaseContract.JobPainters.COLUMN_JOB+"="+job+");",null);
+        r.moveToFirst();
+        List<Painter> painters=new ArrayList<>();
+        while (!r.isAfterLast()) {
+            int id=r.getInt(r.getColumnIndex(DatabaseContract.Painters._ID));
+            String name=r.getString(r.getColumnIndex(DatabaseContract.Painters.COLUMN_NAME));
+            double wage=r.getDouble(r.getColumnIndex(DatabaseContract.Painters.COLUMN_WAGE));
+            painters.add(new Painter(id,name,wage));
+            r.moveToNext();
+        }
+        r.close();
+        return painters;
+    }
+}

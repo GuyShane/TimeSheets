@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Painter"
+        android:textSize="21sp"
+        android:textColor="@color/text_title"
+        android:id="@+id/text_painter"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$"
+        android:textSize="18sp"
+        android:textColor="@color/text_date"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/text_wage"
+        android:layout_below="@+id/text_painter"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/h"
+        android:textColor="@color/text_date"
+        android:textSize="18sp"
+        android:id="@+id/text_per_hour"
+        android:layout_alignTop="@+id/text_wage"
+        android:layout_toEndOf="@+id/text_wage"/>
+</RelativeLayout>
