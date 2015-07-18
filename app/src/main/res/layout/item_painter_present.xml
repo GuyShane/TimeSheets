@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check_present"
+        android:focusable="false"
+        android:clickable="false"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/text_name"
+        android:textSize="22sp"
+        android:textColor="@color/text_title"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/check_present"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hours: 10"
+        android:id="@+id/text_hours"
+        android:visibility="gone"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/text_date"
+        android:layout_below="@+id/check_present"
+        android:layout_marginStart="75dp"/>
+</RelativeLayout>

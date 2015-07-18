@@ -66,14 +66,19 @@ public class JobListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_job_list, container, false);
+
         setupClickListeners();
+
         addButton=(ImageButton)v.findViewById(R.id.button_add);
         menuButton=(ImageButton)v.findViewById(R.id.button_menu);
+
         addButton.setOnClickListener(onClickAdd);
         menuButton.setOnClickListener(onClickMenu);
+
         if (num==1) {
             addButton.setVisibility(View.GONE);
         }
+
         jobList=(ListView)v.findViewById(R.id.list_jobs);
         adapter=new JobListAdapter(getActivity().getApplicationContext(),R.layout.item_job,jobs);
         jobList.setAdapter(adapter);

@@ -132,6 +132,7 @@
         android:src="@drawable/selector_add"
         android:background="#00000000"
         android:paddingBottom="5dp"
+        android:onClick="onClickAddWorkday"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/button_add_painter"
         android:layout_marginEnd="48dp"/>

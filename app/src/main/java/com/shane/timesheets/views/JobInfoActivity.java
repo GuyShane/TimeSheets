@@ -82,6 +82,12 @@ public class JobInfoActivity extends Activity {
         adapter.notifyDataSetChanged();
     }
 
+    public void onClickAddWorkday(View v) {
+        Intent i=new Intent(JobInfoActivity.this,AddWorkdayActivity.class);
+        i.putExtra(IntentExtra.JOB_ID,jobId);
+        startActivity(i);
+    }
+
     public void onClickAddPainter(View v) {
         Intent i=new Intent(JobInfoActivity.this,AddPainterActivity.class);
         i.putExtra(IntentExtra.JOB_ID,jobId);
