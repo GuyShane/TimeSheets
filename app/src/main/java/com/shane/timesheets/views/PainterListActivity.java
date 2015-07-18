@@ -33,7 +33,7 @@ public class PainterListActivity extends Activity {
         paintersList=(ListView)findViewById(R.id.list_painters);
         painters=dbHelper.getAllPainters();
         adapter=new PainterListAdapter(this,R.layout.item_painter_list,painters);
-        View footer= LayoutInflater.from(this).inflate(R.layout.footer_spacer,null,false);
+        View footer= LayoutInflater.from(this).inflate(R.layout.footer_spacer,paintersList,false);
         paintersList.addFooterView(footer,null,false);
         paintersList.setAdapter(adapter);
     }

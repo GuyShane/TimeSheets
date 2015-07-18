@@ -51,9 +51,7 @@ public class JobInfoActivity extends Activity {
         this.nf =NumberFormat.getCurrencyInstance();
 
         painterList=(ListView)findViewById(R.id.list_painters);
-        View footer=((LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE))
-                .inflate(R.layout.footer_spacer,null,false);
-        //View footer=LayoutInflater.from(this).inflate(R.layout.footer_spacer, null, false);
+        View footer=LayoutInflater.from(this).inflate(R.layout.footer_spacer, painterList, false);
         painterList.addFooterView(footer, null, false);
         painters=dbHelper.getPainters(jobId);
         adapter=new PaintersAdapter(this,R.layout.item_job_painter,painters);
