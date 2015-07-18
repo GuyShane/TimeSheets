@@ -13,9 +13,11 @@ import com.shane.timesheets.DateFormatter;
 import com.shane.timesheets.IntentExtra;
 import com.shane.timesheets.R;
 import com.shane.timesheets.models.Job;
+import com.shane.timesheets.models.Painter;
 
 import java.text.NumberFormat;
 import java.util.Date;
+import java.util.List;
 
 public class JobInfoActivity extends Activity {
     private int jobId;
@@ -25,6 +27,7 @@ public class JobInfoActivity extends Activity {
     private NumberFormat nf;
 
     private ListView painterList;
+    private List<Painter> painters;
     private PaintersAdapter adapter;
 
     TextView titleText;
@@ -48,10 +51,13 @@ public class JobInfoActivity extends Activity {
         this.nf =NumberFormat.getCurrencyInstance();
 
         painterList=(ListView)findViewById(R.id.list_painters);
-        adapter=new PaintersAdapter(this,R.layout.item_job_painter,dbHelper.getPainters(jobId));
-        painterList.setAdapter(adapter);
-        View footer=LayoutInflater.from(this).inflate(R.layout.footer_spacer, null, false);
+        View footer=((LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.footer_spacer,null,false);
+        //View footer=LayoutInflater.from(this).inflate(R.layout.footer_spacer, null, false);
         painterList.addFooterView(footer, null, false);
+        painters=dbHelper.getPainters(jobId);
+        adapter=new PaintersAdapter(this,R.layout.item_job_painter,painters);
+        painterList.setAdapter(adapter);
 
         titleText=(TextView)findViewById(R.id.text_title);
         addressText=(TextView)findViewById(R.id.text_address);
@@ -68,6 +74,14 @@ public class JobInfoActivity extends Activity {
         setText(costEstimateText, job.getCost(), "Estimated cost ", null);
         setText(costTotalText,dbHelper.getTotalCost(jobId),"Total cost ",null);
         setText(daysText,dbHelper.getDaysWorked(jobId),null," days worked");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        painters.clear();
+        painters.addAll(dbHelper.getPainters(jobId));
+        adapter.notifyDataSetChanged();
     }
 
     public void onClickAddPainter(View v) {

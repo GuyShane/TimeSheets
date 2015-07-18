@@ -31,4 +31,12 @@ public class Painter {
     public void setWage(double wage) {
         this.wage = wage;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

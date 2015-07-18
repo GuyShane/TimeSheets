@@ -207,4 +207,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         r.close();
         return painters;
     }
+
+    public boolean insertJobPainter(int job, int painter) {
+        boolean inserted=true;
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues c=new ContentValues();
+        c.put(DatabaseContract.JobPainters.COLUMN_JOB,job);
+        c.put(DatabaseContract.JobPainters.COLUMN_PAINTER, painter);
+        try {
+            db.insertOrThrow(DatabaseContract.JobPainters.TABLE_NAME,null,c);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            inserted=false;
+        }
+        return inserted;
+    }
+
+    public boolean insertJobPainter(int job, Painter painter) {
+        boolean inserted=true;
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues c=new ContentValues();
+        c.put(DatabaseContract.JobPainters.COLUMN_JOB,job);
+        c.put(DatabaseContract.JobPainters.COLUMN_PAINTER,painter.getId());
+        try {
+            db.insertOrThrow(DatabaseContract.JobPainters.TABLE_NAME,null,c);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            inserted=false;
+        }
+        return inserted;
+    }
+
+    public boolean insertJobPainter(int job, List<Painter> painters) {
+        boolean inserted=true;
+        SQLiteDatabase db=this.getWritableDatabase();
+        for (Painter painter:painters) {
+            ContentValues c = new ContentValues();
+            c.put(DatabaseContract.JobPainters.COLUMN_JOB, job);
+            c.put(DatabaseContract.JobPainters.COLUMN_PAINTER, painter.getId());
+            try {
+                db.insertOrThrow(DatabaseContract.JobPainters.TABLE_NAME, null, c);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                inserted = false;
+            }
+        }
+        return inserted;
+    }
+
 }

@@ -10,4 +10,25 @@
         android:layout_height="wrap_content"
         android:id="@+id/list_painters"
         android:layout_alignParentTop="true"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_check"
+        android:background="#00000000"
+        android:src="@drawable/selector_check"
+        android:onClick="onClickCheck"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_menu"
+        android:background="#00000000"
+        android:src="@drawable/selector_menu"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
 </RelativeLayout>
