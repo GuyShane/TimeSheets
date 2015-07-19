@@ -17,29 +17,17 @@ import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.shane.timesheets.IntentExtra;
 import com.shane.timesheets.R;
 
 public class HoursPickerDialog extends DialogFragment {
 
-    private ListView list;
-    private View view;
     private int pos;
-    private CheckBox check;
-    private TextView hours;
-
-    public HoursPickerDialog(){}
-
-    @SuppressLint("ValidFragment")
-    public HoursPickerDialog(ListView parent, View view, int position) {
-        this.list=parent;
-        this.view=view;
-        this.pos=position;
-        check = (CheckBox) view.findViewById(R.id.check_present);
-        hours = (TextView) view.findViewById(R.id.text_hours);
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        pos=getArguments().getInt(IntentExtra.PAINTER_POSITION,0);
+        final AddWorkdayActivity caller = (AddWorkdayActivity) getActivity();
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         View v=getActivity().getLayoutInflater().inflate(R.layout.dialog_hours_picker, null, false);
         final EditText hourPicker=(EditText)v.findViewById(R.id.edit_hours);
@@ -49,25 +37,17 @@ public class HoursPickerDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (hourPicker.getText().toString().isEmpty()) {
-                    SparseBooleanArray checked = list.getCheckedItemPositions();
-                    int index = checked.indexOfKey(pos);
-                    list.setItemChecked(pos, !checked.valueAt(index));
+                    caller.toggleChecked(pos);
                 } else {
                     double value = Double.valueOf(hourPicker.getText().toString());
-                    AddWorkdayActivity caller = (AddWorkdayActivity) getActivity();
-                    caller.setHours(pos, value);
-                    check.setChecked(true);
-                    hours.setText("Hours: " + value);
-                    hours.setVisibility(View.VISIBLE);
+                    caller.setHours(pos,value);
                 }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SparseBooleanArray checked = list.getCheckedItemPositions();
-                int index = checked.indexOfKey(pos);
-                list.setItemChecked(pos, !checked.valueAt(index));
+                caller.toggleChecked(pos);
             }
         });
         return builder.create();
