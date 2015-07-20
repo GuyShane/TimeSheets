@@ -37,7 +37,7 @@ public class AddWorkdayActivity extends Activity {
         jobId = getIntent().getIntExtra(IntentExtra.JOB_ID, 0);
 
         dbHelper = new DatabaseHelper(this);
-        painters = dbHelper.getPainters(jobId);
+        painters = dbHelper.getPaintersOnJob(jobId);
         hours = new ArrayList<>();
         for (int i = 0; i < painters.size(); i++) {
             hours.add(Double.valueOf(0));
@@ -77,13 +77,13 @@ public class AddWorkdayActivity extends Activity {
     protected void onResume() {
         super.onResume();
         painters.clear();
-        painters.addAll(dbHelper.getPainters(jobId));
+        painters.addAll(dbHelper.getPaintersOnJob(jobId));
         adapter.notifyDataSetChanged();
     }
 
     public void onClickCheck(View v) {
-        if (!dbHelper.workDayToday(jobId)) {
-            if (dbHelper.insertNewWordDay(jobId)) {
+        if (!dbHelper.isWorkDayToday(jobId)) {
+            if (dbHelper.insertNewWorkDay(jobId)) {
                 //TODO handle error
             }
         }

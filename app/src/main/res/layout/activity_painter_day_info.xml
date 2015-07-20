@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Belgravia"
-        android:id="@+id/text_job"
+        android:id="@+id/text_job_name"
         android:textSize="22sp"
         android:textColor="@color/text_title"
         android:layout_marginTop="10dp"
@@ -24,19 +24,29 @@
         android:id="@+id/text_painter"
         android:textSize="20sp"
         android:textColor="@color/text_cost"
-        android:layout_below="@+id/text_job"
+        android:layout_below="@+id/text_job_name"
         android:layout_marginStart="25dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$18/h"
+        android:text="$18"
         android:id="@+id/text_wage"
         android:textSize="20sp"
         android:textColor="@color/text_cost"
         android:layout_marginStart="20dp"
         android:layout_alignTop="@+id/text_painter"
         android:layout_toEndOf="@+id/text_painter"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/h"
+        android:id="@+id/text_per_hour"
+        android:textSize="20sp"
+        android:textColor="@color/text_cost"
+        android:layout_alignTop="@+id/text_wage"
+        android:layout_toEndOf="@+id/text_wage"/>
 
     <TextView
         android:layout_width="wrap_content"

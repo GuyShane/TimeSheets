@@ -5,32 +5,32 @@ import java.util.Date;
 import java.util.List;
 
 public class WorkDay {
-    private List<Painter> painters;
+    private List<PainterDay> painterDays;
     private Date date;
     private int id;
 
     public WorkDay() {
-        painters = new ArrayList<>();
+        painterDays = new ArrayList<>();
         date = new Date();
     }
 
-    public WorkDay(List<Painter> painters) {
-        this.painters = painters;
+    public WorkDay(List<PainterDay> painterDays) {
+        this.painterDays = painterDays;
         date = new Date();
     }
 
-    public WorkDay(int id, List<Painter> painters) {
+    public WorkDay(int id, List<PainterDay> painterDays) {
         this.id = id;
-        this.painters = painters;
+        this.painterDays = painterDays;
         date = new Date();
     }
 
-    public List<Painter> getPainters() {
-        return painters;
+    public List<PainterDay> getPainterDays() {
+        return painterDays;
     }
 
-    public void setPainters(List<Painter> painters) {
-        this.painters = painters;
+    public void setPainterDays(List<PainterDay> painterDays) {
+        this.painterDays = painterDays;
     }
 
     public Date getDate() {

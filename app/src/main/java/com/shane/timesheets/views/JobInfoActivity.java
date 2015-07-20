@@ -47,20 +47,22 @@ public class JobInfoActivity extends Activity {
         jobId = getIntent().getIntExtra(IntentExtra.JOB_ID, 1);
 
         dbHelper = new DatabaseHelper(this);
-        job = dbHelper.getJob(jobId);
+        job = dbHelper.getJobById(jobId);
         this.df = new DateFormatter();
         this.nf = NumberFormat.getCurrencyInstance();
 
         painterList = (ListView) findViewById(R.id.list_painters);
         View footer = LayoutInflater.from(this).inflate(R.layout.footer_spacer, painterList, false);
         painterList.addFooterView(footer, null, false);
-        painters = dbHelper.getPainters(jobId);
+        painters = dbHelper.getPaintersOnJob(jobId);
         adapter = new PaintersAdapter(this, R.layout.item_job_painter, painters);
         painterList.setAdapter(adapter);
         painterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(JobInfoActivity.this, PainterDayInfoActivity.class);
+                i.putExtra(IntentExtra.JOB_ID, jobId);
+                i.putExtra(IntentExtra.PAINTER_ID,painters.get(position).getId());
                 startActivity(i);
             }
         });
@@ -84,10 +86,15 @@ public class JobInfoActivity extends Activity {
     protected void onResume() {
         super.onResume();
         painters.clear();
-        painters.addAll(dbHelper.getPainters(jobId));
+        painters.addAll(dbHelper.getPaintersOnJob(jobId));
         adapter.notifyDataSetChanged();
-        setTextZero(costTotalText, dbHelper.getTotalCost(jobId), "Total cost ", null);
-        setText(daysText, dbHelper.getDaysWorked(jobId), null, " days worked");
+        setTextZero(costTotalText, dbHelper.getJobTotalCost(jobId), "Total cost ", null);
+        int daysWorked=dbHelper.getDaysWorked(jobId);
+        String endText=" days worked";
+        if (daysWorked==1) {
+            endText=" day worked";
+        }
+        setText(daysText, daysWorked, null, endText);
     }
 
     public void onClickAddWorkday(View v) {

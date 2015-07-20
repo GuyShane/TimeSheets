@@ -78,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return jobs;
     }
 
-    public Job getJob(int id) {
+    public Job getJobById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select * from " + DatabaseContract.Jobs.TABLE_NAME +
                 " where " + DatabaseContract.Jobs._ID +
@@ -93,7 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return new Job(title, address, start, end, cost);
     }
 
-    public double getTotalCost(int job) {
+    public double getJobTotalCost(int job) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select " + DatabaseContract.PainterDays.COLUMN_PAINTER +
                 "," + DatabaseContract.PainterDays.COLUMN_HOURS + " from " +
@@ -106,14 +106,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (!r.isAfterLast()) {
             int painter = r.getInt(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_PAINTER));
             double hours = r.getDouble(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_HOURS));
-            total += hours * getWage(painter);
+            total += hours * getPainterWage(painter);
             r.moveToNext();
         }
         r.close();
         return total;
     }
 
-    public double getWage(int painter) {
+    public Painter getPainterById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor r = db.rawQuery("select * from " + DatabaseContract.Painters.TABLE_NAME +
+                " where " + DatabaseContract.Painters._ID +
+                "=" + id, null);
+        r.moveToFirst();
+        int dbId=r.getInt(r.getColumnIndex(DatabaseContract.Painters._ID));
+        String name = r.getString(r.getColumnIndex(DatabaseContract.Painters.COLUMN_NAME));
+        double wage = r.getDouble(r.getColumnIndex(DatabaseContract.Painters.COLUMN_WAGE));
+        r.close();
+        return new Painter(dbId,name,wage);
+    }
+
+    public double getPainterWage(int painter) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select " + DatabaseContract.Painters.COLUMN_WAGE +
                 " from " + DatabaseContract.Painters.TABLE_NAME +
@@ -170,7 +183,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return painters;
     }
 
-    public List<Painter> getPainters(int job) {
+    public List<Painter> getPaintersOnJob(int job) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select * from " + DatabaseContract.Painters.TABLE_NAME +
                 " where " + DatabaseContract.Painters._ID + " in (select " +
@@ -257,7 +270,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return inserted;
     }
 
-    public boolean workDayToday(int job) {
+    public boolean isWorkDayToday(int job) {
         boolean exists = false;
         String dateString = df.getDMYString();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -273,7 +286,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
-    public boolean insertNewWordDay(int job) {
+    public boolean insertNewWorkDay(int job) {
         boolean inserted = true;
         String dateString = df.getDMYString();
         SQLiteDatabase db = this.getWritableDatabase();
