@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.shane.timesheets.models.Job;
 import com.shane.timesheets.models.Painter;
+import com.shane.timesheets.models.WorkDay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME="app.db";
 
+    private DateFormatter df;
+
     public DatabaseHelper(Context ctx) {
         super(ctx,DB_NAME,null,1);
+        df=new DateFormatter();
     }
 
     @Override
@@ -41,10 +45,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues c=new ContentValues();
         c.put(DatabaseContract.Jobs.COLUMN_TITLE,job.getTitle());
-        c.put(DatabaseContract.Jobs.COLUMN_ADDRESS,job.getAddress());
-        c.put(DatabaseContract.Jobs.COLUMN_START_DATE,job.getStartDateString());
-        c.put(DatabaseContract.Jobs.COLUMN_END_DATE,job.getEndDateString());
-        c.put(DatabaseContract.Jobs.COLUMN_COST,job.getCost());
+        c.put(DatabaseContract.Jobs.COLUMN_ADDRESS, job.getAddress());
+        c.put(DatabaseContract.Jobs.COLUMN_START_DATE, job.getStartDateString());
+        c.put(DatabaseContract.Jobs.COLUMN_END_DATE, job.getEndDateString());
+        c.put(DatabaseContract.Jobs.COLUMN_COST, job.getCost());
         try {
             db.insertOrThrow(DatabaseContract.Jobs.TABLE_NAME,null,c);
         } catch(SQLException e) {
@@ -112,9 +116,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public double getWage(int painter) {
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor r=db.rawQuery("select "+ DatabaseContract.Painters.COLUMN_WAGE+
-                " from "+ DatabaseContract.Painters.TABLE_NAME+
-                " where "+ DatabaseContract.Painters._ID+"="+painter+";",null);
+        Cursor r=db.rawQuery("select " + DatabaseContract.Painters.COLUMN_WAGE +
+                " from " + DatabaseContract.Painters.TABLE_NAME +
+                " where " + DatabaseContract.Painters._ID + "=" + painter + ";", null);
         r.moveToFirst();
         double wage=r.getDouble(r.getColumnIndex(DatabaseContract.Painters.COLUMN_WAGE));
         r.close();
@@ -170,11 +174,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Painter> getPainters(int job) {
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor r=db.rawQuery("select * from "+ DatabaseContract.Painters.TABLE_NAME+
-                " where "+ DatabaseContract.Painters._ID+" in (select "+
-                DatabaseContract.JobPainters.COLUMN_PAINTER+" from "+
-                DatabaseContract.JobPainters.TABLE_NAME+" where "+
-                DatabaseContract.JobPainters.COLUMN_JOB+"="+job+");",null);
+        Cursor r=db.rawQuery("select * from " + DatabaseContract.Painters.TABLE_NAME +
+                " where " + DatabaseContract.Painters._ID + " in (select " +
+                DatabaseContract.JobPainters.COLUMN_PAINTER + " from " +
+                DatabaseContract.JobPainters.TABLE_NAME + " where " +
+                DatabaseContract.JobPainters.COLUMN_JOB + "=" + job + ");", null);
         r.moveToFirst();
         List<Painter> painters=new ArrayList<>();
         while (!r.isAfterLast()) {
@@ -190,11 +194,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Painter> getPaintersNotOnJob(int job) {
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor r=db.rawQuery("select * from "+ DatabaseContract.Painters.TABLE_NAME+
-                " where "+ DatabaseContract.Painters._ID+" not in (select "+
-                DatabaseContract.JobPainters.COLUMN_PAINTER+" from "+
-                DatabaseContract.JobPainters.TABLE_NAME+" where "+
-                DatabaseContract.JobPainters.COLUMN_JOB+"="+job+");",null);
+        Cursor r=db.rawQuery("select * from " + DatabaseContract.Painters.TABLE_NAME +
+                " where " + DatabaseContract.Painters._ID + " not in (select " +
+                DatabaseContract.JobPainters.COLUMN_PAINTER + " from " +
+                DatabaseContract.JobPainters.TABLE_NAME + " where " +
+                DatabaseContract.JobPainters.COLUMN_JOB + "=" + job + ");", null);
         r.moveToFirst();
         List<Painter> painters=new ArrayList<>();
         while (!r.isAfterLast()) {
@@ -227,8 +231,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         boolean inserted=true;
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues c=new ContentValues();
-        c.put(DatabaseContract.JobPainters.COLUMN_JOB,job);
-        c.put(DatabaseContract.JobPainters.COLUMN_PAINTER,painter.getId());
+        c.put(DatabaseContract.JobPainters.COLUMN_JOB, job);
+        c.put(DatabaseContract.JobPainters.COLUMN_PAINTER, painter.getId());
         try {
             db.insertOrThrow(DatabaseContract.JobPainters.TABLE_NAME,null,c);
         } catch(SQLException e) {
@@ -251,6 +255,97 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 e.printStackTrace();
                 inserted = false;
             }
+        }
+        return inserted;
+    }
+
+    public boolean workDayToday(int job) {
+        boolean exists=false;
+        String dateString=df.getDMYString();
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select count(*) from "+ DatabaseContract.WorkDays.TABLE_NAME+
+                " where "+ DatabaseContract.WorkDays.COLUMN_JOB+
+                "="+job+" and "+ DatabaseContract.WorkDays.COLUMN_DATE+
+                "=\""+dateString+"\";",null);
+        r.moveToFirst();
+        if (r.getCount()>0 && r.getColumnCount()>0) {
+            exists=r.getInt(0)>0;
+        }
+        r.close();
+        return exists;
+    }
+
+    public boolean insertNewWordDay(int job) {
+        boolean inserted=true;
+        String dateString=df.getDMYString();
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues c=new ContentValues();
+        c.put(DatabaseContract.WorkDays.COLUMN_JOB, job);
+        c.put(DatabaseContract.WorkDays.COLUMN_DATE, dateString);
+        try {
+            db.insertOrThrow(DatabaseContract.WorkDays.TABLE_NAME, null, c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            inserted = false;
+        }
+        return inserted;
+    }
+
+    public int getWorkDayId(int job) {
+        String dateString=df.getDMYString();
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor r=db.rawQuery("select * from " + DatabaseContract.WorkDays.TABLE_NAME +
+                " where " + DatabaseContract.WorkDays.COLUMN_JOB +
+                "=" + job + " and " + DatabaseContract.WorkDays.COLUMN_DATE +
+                "=\"" + dateString + "\";", null);
+        r.moveToFirst();
+        return r.getInt(r.getColumnIndex(DatabaseContract.WorkDays._ID));
+    }
+
+    public boolean insertPainterDay(Painter painter, WorkDay workDay, double hours) {
+        boolean inserted=true;
+        SQLiteDatabase db=this.getReadableDatabase();
+        ContentValues c=new ContentValues();
+        c.put(DatabaseContract.PainterDays.COLUMN_PAINTER,painter.getId());
+        c.put(DatabaseContract.PainterDays.COLUMN_DATE,workDay.getId());
+        c.put(DatabaseContract.PainterDays.COLUMN_HOURS,hours);
+        try {
+            db.insertOrThrow(DatabaseContract.PainterDays.TABLE_NAME, null, c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            inserted = false;
+        }
+        return inserted;
+    }
+
+    public boolean insertPainterDay(Painter painter, int workDay, double hours) {
+        boolean inserted=true;
+        SQLiteDatabase db=this.getReadableDatabase();
+        ContentValues c=new ContentValues();
+        c.put(DatabaseContract.PainterDays.COLUMN_PAINTER,painter.getId());
+        c.put(DatabaseContract.PainterDays.COLUMN_DATE,workDay);
+        c.put(DatabaseContract.PainterDays.COLUMN_HOURS,hours);
+        try {
+            db.insertOrThrow(DatabaseContract.PainterDays.TABLE_NAME, null, c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            inserted = false;
+        }
+        return inserted;
+    }
+
+    public boolean insertPainterDay(int painter, int workDay, double hours) {
+        boolean inserted=true;
+        SQLiteDatabase db=this.getReadableDatabase();
+        ContentValues c=new ContentValues();
+        c.put(DatabaseContract.PainterDays.COLUMN_PAINTER,painter);
+        c.put(DatabaseContract.PainterDays.COLUMN_DATE,workDay);
+        c.put(DatabaseContract.PainterDays.COLUMN_HOURS,hours);
+        try {
+            db.insertOrThrow(DatabaseContract.PainterDays.TABLE_NAME, null, c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            inserted = false;
         }
         return inserted;
     }

@@ -43,7 +43,7 @@ public class JobInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_info);
 
-        jobId=getIntent().getIntExtra(IntentExtra.JOB_ID,1);
+        jobId=getIntent().getIntExtra(IntentExtra.JOB_ID, 1);
 
         dbHelper=new DatabaseHelper(this);
         job=dbHelper.getJob(jobId);
@@ -70,8 +70,6 @@ public class JobInfoActivity extends Activity {
         setText(startText,job.getStartDate(),"Start date ",null);
         setText(endText,job.getEndDate(),"End date ",null);
         setText(costEstimateText, job.getCost(), "Estimated cost ", null);
-        setText(costTotalText,dbHelper.getTotalCost(jobId),"Total cost ",null);
-        setText(daysText,dbHelper.getDaysWorked(jobId),null," days worked");
     }
 
     @Override
@@ -80,6 +78,8 @@ public class JobInfoActivity extends Activity {
         painters.clear();
         painters.addAll(dbHelper.getPainters(jobId));
         adapter.notifyDataSetChanged();
+        setText(costTotalText,dbHelper.getTotalCost(jobId),"Total cost ",null);
+        setText(daysText,dbHelper.getDaysWorked(jobId),null," days worked");
     }
 
     public void onClickAddWorkday(View v) {

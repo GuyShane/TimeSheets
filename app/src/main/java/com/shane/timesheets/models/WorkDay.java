@@ -7,6 +7,7 @@ import java.util.List;
 public class WorkDay {
     private List<Painter> painters;
     private Date date;
+    private int id;
 
     public WorkDay() {
         painters=new ArrayList<>();
@@ -14,6 +15,12 @@ public class WorkDay {
     }
 
     public WorkDay(List<Painter> painters) {
+        this.painters=painters;
+        date=new Date();
+    }
+
+    public WorkDay(int id, List<Painter> painters) {
+        this.id=id;
         this.painters=painters;
         date=new Date();
     }
@@ -32,5 +39,13 @@ public class WorkDay {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
