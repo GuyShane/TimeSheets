@@ -3,6 +3,6 @@
     <color name="bg_color">#ff949494</color>
     <color name="text_title">#ffefefef</color>
     <color name="text_address">#ffcddddd</color>
-    <color name="text_date">#ff787878</color>
+    <color name="text_date">#ff505050</color>
     <color name="text_cost">#ffdddddd</color>
 </resources>

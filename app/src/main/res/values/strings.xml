@@ -12,4 +12,5 @@
     <string name="title_activity_workday">WorkdayActivity</string>
     <string name="title_activity_new_painter">NewPainterActivity</string>
     <string name="title_activity_add_painter">AddPainterActivity</string>
+    <string name="title_activity_painter_day_info">PainterDayInfoActivity</string>
 </resources>

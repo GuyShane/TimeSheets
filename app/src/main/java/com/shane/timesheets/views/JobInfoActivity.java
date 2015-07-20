@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -56,6 +57,13 @@ public class JobInfoActivity extends Activity {
         painters=dbHelper.getPainters(jobId);
         adapter=new PaintersAdapter(this,R.layout.item_job_painter,painters);
         painterList.setAdapter(adapter);
+        painterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=new Intent(JobInfoActivity.this,PainterDayInfoActivity.class);
+                startActivity(i);
+            }
+        });
 
         titleText=(TextView)findViewById(R.id.text_title);
         addressText=(TextView)findViewById(R.id.text_address);
@@ -78,13 +86,13 @@ public class JobInfoActivity extends Activity {
         painters.clear();
         painters.addAll(dbHelper.getPainters(jobId));
         adapter.notifyDataSetChanged();
-        setText(costTotalText,dbHelper.getTotalCost(jobId),"Total cost ",null);
+        setTextZero(costTotalText,dbHelper.getTotalCost(jobId),"Total cost ",null);
         setText(daysText,dbHelper.getDaysWorked(jobId),null," days worked");
     }
 
     public void onClickAddWorkday(View v) {
         Intent i=new Intent(JobInfoActivity.this,AddWorkdayActivity.class);
-        i.putExtra(IntentExtra.JOB_ID,jobId);
+        i.putExtra(IntentExtra.JOB_ID, jobId);
         startActivity(i);
     }
 
@@ -122,6 +130,19 @@ public class JobInfoActivity extends Activity {
 
     private void setText(TextView view, double value, String before, String after) {
         if (value!=0) {
+            if (before==null) {
+                before="";
+            }
+            if (after==null) {
+                after="";
+            }
+            view.setVisibility(View.VISIBLE);
+            view.setText(before+nf.format(value)+after);
+        }
+    }
+
+    private void setTextZero(TextView view, double value, String before, String after) {
+        if (value>=0) {
             if (before==null) {
                 before="";
             }
