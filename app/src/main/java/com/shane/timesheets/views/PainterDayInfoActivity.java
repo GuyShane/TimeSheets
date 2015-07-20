@@ -2,6 +2,9 @@ package com.shane.timesheets.views;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shane.timesheets.DatabaseHelper;
@@ -25,8 +28,9 @@ public class PainterDayInfoActivity extends Activity {
     private DatabaseHelper dbHelper;
     private NumberFormat cf;
     private List<PainterDay> painterDays;
-    private DateFormatter df;
     private DecimalFormat nf;
+    private ListView dayList;
+    private PainterDayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,6 @@ public class PainterDayInfoActivity extends Activity {
         setContentView(R.layout.activity_painter_day_info);
 
         cf=NumberFormat.getCurrencyInstance();
-        df=new DateFormatter();
         nf=new DecimalFormat();
         nf.setDecimalSeparatorAlwaysShown(false);
 
@@ -51,7 +54,13 @@ public class PainterDayInfoActivity extends Activity {
         dbHelper=new DatabaseHelper(this);
         job=dbHelper.getJobById(jobId);
         painter=dbHelper.getPainterById(painterId);
-        painterDays=dbHelper.getPainterDays(jobId,painterId);
+        painterDays=dbHelper.getPainterDays(jobId, painterId);
+
+        dayList=(ListView)findViewById(R.id.list_days);
+        View footer= LayoutInflater.from(this).inflate(R.layout.footer_spacer,dayList,false);
+        dayList.addFooterView(footer,null,false);
+        adapter=new PainterDayAdapter(this,R.layout.item_painter_day,painterDays);
+        dayList.setAdapter(adapter);
 
         double totalHours=0;
         double owed=0;
@@ -65,10 +74,5 @@ public class PainterDayInfoActivity extends Activity {
         painterWage.setText(cf.format(painter.getWage()));
         hoursWorked.setText(nf.format(totalHours)+" hours worked total");
         amountDue.setText(cf.format(owed)+" owed");
-
-        for (PainterDay day:painterDays) {
-            System.out.println(painter.getName() + " worked " +
-                    day.getHours() + " hours on " + df.getShortDateString(day.getDate()));
-        }
     }
 }

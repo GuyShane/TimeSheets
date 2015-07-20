@@ -16,6 +16,7 @@ import com.shane.timesheets.IntentExtra;
 import com.shane.timesheets.R;
 import com.shane.timesheets.models.Painter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +29,15 @@ public class AddWorkdayActivity extends Activity {
     private List<Double> hours;
     private CheckBox check;
     private TextView hoursText;
+    private DecimalFormat nf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workday);
+
+        nf=new DecimalFormat();
+        nf.setDecimalSeparatorAlwaysShown(false);
 
         jobId = getIntent().getIntExtra(IntentExtra.JOB_ID, 0);
 
@@ -40,7 +45,7 @@ public class AddWorkdayActivity extends Activity {
         painters = dbHelper.getPaintersOnJob(jobId);
         hours = new ArrayList<>();
         for (int i = 0; i < painters.size(); i++) {
-            hours.add(Double.valueOf(0));
+            hours.add(0.0);
         }
         painterList = (ListView) findViewById(R.id.list_painters_present);
         painterList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
@@ -104,7 +109,7 @@ public class AddWorkdayActivity extends Activity {
     public void setHours(int position, Double value) {
         hours.set(position, value);
         check.setChecked(true);
-        hoursText.setText("Hours: " + value);
+        hoursText.setText("Hours: " + nf.format(value));
         hoursText.setVisibility(View.VISIBLE);
     }
 
