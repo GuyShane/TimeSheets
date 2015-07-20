@@ -22,14 +22,9 @@ import java.util.List;
 public class PainterDayInfoActivity extends Activity {
 
     private int jobId;
-    private Job job;
     private int painterId;
-    private Painter painter;
     private DatabaseHelper dbHelper;
-    private NumberFormat cf;
     private List<PainterDay> painterDays;
-    private DecimalFormat nf;
-    private ListView dayList;
     private PainterDayAdapter adapter;
 
     @Override
@@ -37,8 +32,8 @@ public class PainterDayInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_painter_day_info);
 
-        cf=NumberFormat.getCurrencyInstance();
-        nf=new DecimalFormat();
+        NumberFormat cf = NumberFormat.getCurrencyInstance();
+        DecimalFormat nf = new DecimalFormat();
         nf.setDecimalSeparatorAlwaysShown(false);
 
         TextView jobName=(TextView) findViewById(R.id.text_job_name);
@@ -52,13 +47,13 @@ public class PainterDayInfoActivity extends Activity {
         painterId=extras.getInt(IntentExtra.PAINTER_ID);
 
         dbHelper=new DatabaseHelper(this);
-        job=dbHelper.getJobById(jobId);
-        painter=dbHelper.getPainterById(painterId);
+        Job job = dbHelper.getJobById(jobId);
+        Painter painter = dbHelper.getPainterById(painterId);
         painterDays=dbHelper.getPainterDays(jobId, painterId);
 
-        dayList=(ListView)findViewById(R.id.list_days);
-        View footer= LayoutInflater.from(this).inflate(R.layout.footer_spacer,dayList,false);
-        dayList.addFooterView(footer,null,false);
+        ListView dayList = (ListView) findViewById(R.id.list_days);
+        View footer= LayoutInflater.from(this).inflate(R.layout.footer_spacer, dayList,false);
+        dayList.addFooterView(footer, null, false);
         adapter=new PainterDayAdapter(this,R.layout.item_painter_day,painterDays);
         dayList.setAdapter(adapter);
 
@@ -66,7 +61,7 @@ public class PainterDayInfoActivity extends Activity {
         double owed=0;
         for (PainterDay day:painterDays) {
             totalHours+=day.getHours();
-            owed+=painter.getWage()*day.getHours();
+            owed+= painter.getWage()*day.getHours();
         }
 
         jobName.setText(job.getTitle());
@@ -74,5 +69,13 @@ public class PainterDayInfoActivity extends Activity {
         painterWage.setText(cf.format(painter.getWage()));
         hoursWorked.setText(nf.format(totalHours)+" hours worked total");
         amountDue.setText(cf.format(owed)+" owed");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        painterDays.clear();
+        painterDays.addAll(dbHelper.getPainterDays(jobId, painterId));
+        adapter.notifyDataSetChanged();
     }
 }

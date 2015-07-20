@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:text="Name"
         android:textSize="20sp"
-        android:textColor="@color/text_title"
+        android:textColor="@color/text_light"
         android:id="@+id/text_name"
         android:layout_alignParentTop="true"
         android:layout_marginTop="13dp"

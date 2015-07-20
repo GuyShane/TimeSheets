@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 public class JobInfoActivity extends Activity {
+    private int fromCompleted;
     private int jobId;
     private Job job;
     private DatabaseHelper dbHelper;
@@ -31,20 +33,26 @@ public class JobInfoActivity extends Activity {
     private List<Painter> painters;
     private PaintersAdapter adapter;
 
-    TextView titleText;
-    TextView addressText;
-    TextView startText;
-    TextView endText;
-    TextView costEstimateText;
-    TextView costTotalText;
-    TextView daysText;
+    private ImageButton buttonCheck;
+    private ImageButton buttonAdd;
+    private ImageButton buttonAddPainter;
+
+    private TextView titleText;
+    private TextView addressText;
+    private TextView startText;
+    private TextView endText;
+    private TextView costEstimateText;
+    private TextView costTotalText;
+    private TextView daysText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_info);
 
-        jobId = getIntent().getIntExtra(IntentExtra.JOB_ID, 1);
+        Bundle extras=getIntent().getExtras();
+        fromCompleted=extras.getInt(IntentExtra.FROM_COMPLETED);
+        jobId = extras.getInt(IntentExtra.JOB_ID);
 
         dbHelper = new DatabaseHelper(this);
         job = dbHelper.getJobById(jobId);
@@ -66,6 +74,14 @@ public class JobInfoActivity extends Activity {
                 startActivity(i);
             }
         });
+
+        buttonCheck=(ImageButton)findViewById(R.id.button_complete);
+        buttonAdd=(ImageButton)findViewById(R.id.button_add_work_day);
+        buttonAddPainter=(ImageButton)findViewById(R.id.button_add_painter);
+
+        if (fromCompleted==1) {
+            buttonsGone();
+        }
 
         titleText = (TextView) findViewById(R.id.text_title);
         addressText = (TextView) findViewById(R.id.text_address);
@@ -97,6 +113,11 @@ public class JobInfoActivity extends Activity {
         setText(daysText, daysWorked, null, endText);
     }
 
+    public void onClickCompleted(View v) {
+        CompletedDialog conf=new CompletedDialog();
+        conf.show(getFragmentManager(), "Completed dialog");
+    }
+
     public void onClickAddWorkday(View v) {
         Intent i = new Intent(JobInfoActivity.this, AddWorkdayActivity.class);
         i.putExtra(IntentExtra.JOB_ID, jobId);
@@ -107,6 +128,17 @@ public class JobInfoActivity extends Activity {
         Intent i = new Intent(JobInfoActivity.this, AddPainterActivity.class);
         i.putExtra(IntentExtra.JOB_ID, jobId);
         startActivity(i);
+    }
+
+    public void markComplete() {
+        dbHelper.markJobCompleted(jobId);
+        finish();
+    }
+
+    private void buttonsGone() {
+        buttonCheck.setVisibility(View.GONE);
+        buttonAdd.setVisibility(View.GONE);
+        buttonAddPainter.setVisibility(View.GONE);
     }
 
     private void setText(TextView view, String value, String before, String after) {

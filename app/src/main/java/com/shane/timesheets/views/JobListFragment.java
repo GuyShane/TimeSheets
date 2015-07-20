@@ -89,6 +89,7 @@ public class JobListFragment extends Fragment {
                 position -= jobList.getHeaderViewsCount();
                 Intent i = new Intent(getActivity(), JobInfoActivity.class);
                 i.putExtra(IntentExtra.JOB_ID, jobs.get(position).getId());
+                i.putExtra(IntentExtra.FROM_COMPLETED,num);
                 startActivity(i);
             }
         });

@@ -401,4 +401,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return df.getDate(dateString);
     }
 
+    public void markJobCompleted(int job) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("update "+ DatabaseContract.Jobs.TABLE_NAME+
+                " set "+ DatabaseContract.Jobs.COLUMN_COMPLETED+
+                "=1 where "+ DatabaseContract.Jobs._ID+"="+job+";");
+        updateEndDate(job);
+    }
+
+    public void updateEndDate(int job) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String dateString='"'+df.getDMYString()+'"';
+        db.execSQL("update "+ DatabaseContract.Jobs.TABLE_NAME+
+                " set "+ DatabaseContract.Jobs.COLUMN_END_DATE+
+                "="+dateString+
+                " where "+ DatabaseContract.Jobs._ID+"="+job+";");
+    }
+
 }
