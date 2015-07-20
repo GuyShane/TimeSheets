@@ -11,17 +11,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.shane.timesheets.DatabaseContract;
 import com.shane.timesheets.DatabaseHelper;
 import com.shane.timesheets.DateFormatter;
 import com.shane.timesheets.R;
 import com.shane.timesheets.models.Job;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 
 public class NewJobActivity extends Activity {
@@ -48,15 +43,15 @@ public class NewJobActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_job);
 
-        this.ctx=this;
-        titleText =(EditText) findViewById(R.id.edit_title);
-        addressText =(EditText) findViewById(R.id.edit_address);
-        startDateText =(EditText) findViewById(R.id.edit_start_date);
-        endDateText =(EditText) findViewById(R.id.edit_end_date);
-        costText =(EditText) findViewById(R.id.edit_cost);
+        this.ctx = this;
+        titleText = (EditText) findViewById(R.id.edit_title);
+        addressText = (EditText) findViewById(R.id.edit_address);
+        startDateText = (EditText) findViewById(R.id.edit_start_date);
+        endDateText = (EditText) findViewById(R.id.edit_end_date);
+        costText = (EditText) findViewById(R.id.edit_cost);
 
-        this.dbHelper=new DatabaseHelper(ctx);
-        this.df=new DateFormatter();
+        this.dbHelper = new DatabaseHelper(ctx);
+        this.df = new DateFormatter();
 
         setupForm();
     }
@@ -78,29 +73,29 @@ public class NewJobActivity extends Activity {
     }
 
     private void setupForm() {
-        final Calendar cal=Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         startDateText.setText(df.getShortDateString());
         startDateText.setTag(df.getDMYString());
-        final DatePickerDialog startDatePicker=new DatePickerDialog(ctx,
+        final DatePickerDialog startDatePicker = new DatePickerDialog(ctx,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         startDateText.setText(df.getShortDateString(year, monthOfYear, dayOfMonth));
-                        startDateText.setTag(df.getDMYString(year,monthOfYear,dayOfMonth));
-            }
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+                        startDateText.setTag(df.getDMYString(year, monthOfYear, dayOfMonth));
+                    }
+                }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         startDateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startDatePicker.show();
             }
         });
-        final DatePickerDialog endDatePicker=new DatePickerDialog(ctx,
+        final DatePickerDialog endDatePicker = new DatePickerDialog(ctx,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         endDateText.setText(df.getShortDateString(year, monthOfYear, dayOfMonth));
-                        endDateText.setTag(df.getDMYString(year,monthOfYear,dayOfMonth));
+                        endDateText.setTag(df.getDMYString(year, monthOfYear, dayOfMonth));
                     }
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         endDateText.setOnClickListener(new View.OnClickListener() {
@@ -113,12 +108,11 @@ public class NewJobActivity extends Activity {
 
     public void onClickCheck(View v) {
         if (validateForm()) {
-            Job newJob=new Job(title,address,startDate,endDate,cost);
+            Job newJob = new Job(title, address, startDate, endDate, cost);
             if (dbHelper.insertJob(newJob)) {
                 makeMessage("Job saved");
                 finish();
-            }
-            else {
+            } else {
                 makeMessage("Save failed");
             }
         }
@@ -137,41 +131,38 @@ public class NewJobActivity extends Activity {
         if (titleText.getText().toString().isEmpty()) {
             makeMessage("You need to set a title, man");
             return false;
-        }
-        else {
-            title=titleText.getText().toString();
+        } else {
+            title = titleText.getText().toString();
         }
 
         if (addressText.getText().toString().isEmpty()) {
-            address=null;
-        }
-        else {
-            address=addressText.getText().toString();
+            address = null;
+        } else {
+            address = addressText.getText().toString();
         }
 
         if (startDateText.getText().toString().isEmpty()) {
-            startDate=null;
-        }
-        else {
-            startDate=startDateText.getTag().toString();
+            startDate = null;
+        } else {
+            startDate = startDateText.getTag().toString();
         }
 
         if (endDateText.getText().toString().isEmpty()) {
-            endDate=null;
+            endDate = null;
         } else {
-            endDate=endDateText.getTag().toString();
+            endDate = endDateText.getTag().toString();
         }
 
         if (costText.getText().toString().isEmpty()) {
-            cost=0;
+            cost = 0;
         } else {
-            cost=Double.valueOf(costText.getText().toString());
+            cost = Double.valueOf(costText.getText().toString());
         }
 
         return true;
     }
 
     private void makeMessage(String message) {
-        Toast.makeText(ctx,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,6 +1,5 @@
 package com.shane.timesheets;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,7 +10,7 @@ public class DateFormatter {
     private SimpleDateFormat formatter;
 
     public DateFormatter() {
-        formatter=new SimpleDateFormat("", Locale.getDefault());
+        formatter = new SimpleDateFormat("", Locale.getDefault());
     }
 
     public String getShortDateString() {
@@ -21,7 +20,7 @@ public class DateFormatter {
 
     public String getShortDateString(int year, int month, int day) {
         formatter.applyLocalizedPattern("E, MMM dd");
-        Calendar c= Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         c.set(year, month, day);
         return formatter.format(c.getTime());
     }
@@ -38,7 +37,7 @@ public class DateFormatter {
 
     public String getLongDateString(int year, int month, int day) {
         formatter.applyLocalizedPattern("EEEE, MMM dd");
-        Calendar c= Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         c.set(year, month, day);
         return formatter.format(c.getTime());
     }
@@ -56,7 +55,7 @@ public class DateFormatter {
 
     public String getDMYString(int year, int month, int day) {
         formatter.applyLocalizedPattern("dd-MM-yyyy");
-        Calendar c= Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         c.set(year, month, day);
         return formatter.format(c.getTime());
     }

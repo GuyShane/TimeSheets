@@ -23,23 +23,23 @@ public class PainterListAdapter extends ArrayAdapter<Painter> {
     private List<Painter> painters;
 
     public PainterListAdapter(Context context, int resource, List<Painter> items) {
-        super(context,resource,items);
-        this.ctx=context;
-        this.res=resource;
-        this.painters=items;
+        super(context, resource, items);
+        this.ctx = context;
+        this.res = resource;
+        this.painters = items;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Painter item=painters.get(position);
-        NumberFormat cf=NumberFormat.getCurrencyInstance();
+        Painter item = painters.get(position);
+        NumberFormat cf = NumberFormat.getCurrencyInstance();
 
-        if (convertView==null) {
-            convertView= LayoutInflater.from(ctx).inflate(res,parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(ctx).inflate(res, parent, false);
         }
 
-        TextView nameText=(TextView)convertView.findViewById(R.id.text_painter);
-        TextView wageText=(TextView)convertView.findViewById(R.id.text_wage);
+        TextView nameText = (TextView) convertView.findViewById(R.id.text_painter);
+        TextView wageText = (TextView) convertView.findViewById(R.id.text_wage);
 
         nameText.setText(item.getName());
         wageText.setText(cf.format(item.getWage()));

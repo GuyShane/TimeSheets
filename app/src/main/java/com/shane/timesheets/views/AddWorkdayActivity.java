@@ -12,11 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shane.timesheets.DatabaseHelper;
-import com.shane.timesheets.DateFormatter;
 import com.shane.timesheets.IntentExtra;
 import com.shane.timesheets.R;
 import com.shane.timesheets.models.Painter;
-import com.shane.timesheets.models.WorkDay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +34,17 @@ public class AddWorkdayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workday);
 
-        jobId=getIntent().getIntExtra(IntentExtra.JOB_ID,0);
+        jobId = getIntent().getIntExtra(IntentExtra.JOB_ID, 0);
 
-        dbHelper=new DatabaseHelper(this);
-        painters=dbHelper.getPainters(jobId);
-        hours=new ArrayList<>();
-        for (int i=0;i<painters.size();i++) {
+        dbHelper = new DatabaseHelper(this);
+        painters = dbHelper.getPainters(jobId);
+        hours = new ArrayList<>();
+        for (int i = 0; i < painters.size(); i++) {
             hours.add(Double.valueOf(0));
         }
-        painterList=(ListView)findViewById(R.id.list_painters_present);
+        painterList = (ListView) findViewById(R.id.list_painters_present);
         painterList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        View footer= LayoutInflater.from(this).inflate(R.layout.footer_spacer,painterList,false);
+        View footer = LayoutInflater.from(this).inflate(R.layout.footer_spacer, painterList, false);
         painterList.addFooterView(footer, null, false);
         painterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,7 +69,7 @@ public class AddWorkdayActivity extends Activity {
                 }
             }
         });
-        adapter=new AddWorkdayAdapter(this,R.layout.item_painter_present,painters);
+        adapter = new AddWorkdayAdapter(this, R.layout.item_painter_present, painters);
         painterList.setAdapter(adapter);
     }
 
@@ -89,13 +87,13 @@ public class AddWorkdayActivity extends Activity {
                 //TODO handle error
             }
         }
-        int workDay=dbHelper.getWorkDayId(jobId);
+        int workDay = dbHelper.getWorkDayId(jobId);
         SparseBooleanArray checked = painterList.getCheckedItemPositions();
-        for (int i=0;i<checked.size();i++) {
+        for (int i = 0; i < checked.size(); i++) {
             if (checked.valueAt(i)) {
-                Painter p=painters.get(checked.keyAt(i));
-                double h=hours.get(checked.keyAt(i));
-                if (dbHelper.insertPainterDay(p,workDay,h)) {
+                Painter p = painters.get(checked.keyAt(i));
+                double h = hours.get(checked.keyAt(i));
+                if (dbHelper.insertPainterDay(p, workDay, h)) {
                     //TODO handle error
                 }
             }
@@ -104,7 +102,7 @@ public class AddWorkdayActivity extends Activity {
     }
 
     public void setHours(int position, Double value) {
-        hours.set(position,value);
+        hours.set(position, value);
         check.setChecked(true);
         hoursText.setText("Hours: " + value);
         hoursText.setVisibility(View.VISIBLE);

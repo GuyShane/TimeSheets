@@ -22,19 +22,19 @@ public class PaintersAdapter extends ArrayAdapter<Painter> {
     private int res;
 
     public PaintersAdapter(Context context, int resource, List<Painter> items) {
-        super(context,resource,items);
-        painters=items;
-        ctx=context;
-        res=resource;
+        super(context, resource, items);
+        painters = items;
+        ctx = context;
+        res = resource;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Painter item=painters.get(position);
-        if (convertView==null) {
-            convertView= LayoutInflater.from(ctx).inflate(res,parent,false);
+        Painter item = painters.get(position);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(ctx).inflate(res, parent, false);
         }
-        TextView painter=(TextView)convertView.findViewById(R.id.text_painter);
+        TextView painter = (TextView) convertView.findViewById(R.id.text_painter);
         painter.setText(item.getName());
         return convertView;
     }

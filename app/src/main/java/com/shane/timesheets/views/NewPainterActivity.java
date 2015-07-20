@@ -1,17 +1,13 @@
 package com.shane.timesheets.views;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.shane.timesheets.DatabaseHelper;
 import com.shane.timesheets.R;
-import com.shane.timesheets.models.Job;
 import com.shane.timesheets.models.Painter;
 
 public class NewPainterActivity extends Activity {
@@ -26,20 +22,19 @@ public class NewPainterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_painter);
-        dbHelper=new DatabaseHelper(this);
+        dbHelper = new DatabaseHelper(this);
 
-        nameText=(EditText)findViewById(R.id.edit_name);
-        wageText=(EditText)findViewById(R.id.edit_wage);
+        nameText = (EditText) findViewById(R.id.edit_name);
+        wageText = (EditText) findViewById(R.id.edit_wage);
     }
 
     public void onClickCheck(View v) {
         if (validateForm()) {
-            Painter newPainter= new Painter(name,wage);
+            Painter newPainter = new Painter(name, wage);
             if (dbHelper.insertPainter(newPainter)) {
                 makeMessage("Painter saved");
                 finish();
-            }
-            else {
+            } else {
                 makeMessage("Save failed");
             }
         }
@@ -58,16 +53,14 @@ public class NewPainterActivity extends Activity {
         if (nameText.getText().toString().isEmpty()) {
             makeMessage("The painter needs a name...");
             return false;
-        }
-        else {
-            name=nameText.getText().toString();
+        } else {
+            name = nameText.getText().toString();
         }
         if (wageText.getText().toString().isEmpty()) {
             makeMessage("You gotta pay them something");
             return false;
-        }
-        else {
-            wage=Double.valueOf(wageText.getText().toString());
+        } else {
+            wage = Double.valueOf(wageText.getText().toString());
         }
         return true;
     }

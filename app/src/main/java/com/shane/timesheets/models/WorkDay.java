@@ -10,19 +10,19 @@ public class WorkDay {
     private int id;
 
     public WorkDay() {
-        painters=new ArrayList<>();
-        date=new Date();
+        painters = new ArrayList<>();
+        date = new Date();
     }
 
     public WorkDay(List<Painter> painters) {
-        this.painters=painters;
-        date=new Date();
+        this.painters = painters;
+        date = new Date();
     }
 
     public WorkDay(int id, List<Painter> painters) {
-        this.id=id;
-        this.painters=painters;
-        date=new Date();
+        this.id = id;
+        this.painters = painters;
+        date = new Date();
     }
 
     public List<Painter> getPainters() {

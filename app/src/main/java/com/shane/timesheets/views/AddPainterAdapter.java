@@ -19,21 +19,21 @@ public class AddPainterAdapter extends ArrayAdapter<Painter> {
     private Context ctx;
 
     public AddPainterAdapter(Context context, int resource, List<Painter> items) {
-        super(context,resource,items);
-        this.painters=items;
-        this.res=resource;
-        this.ctx=context;
+        super(context, resource, items);
+        this.painters = items;
+        this.res = resource;
+        this.ctx = context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Painter item=painters.get(position);
-        if (convertView==null) {
-            convertView= LayoutInflater.from(ctx).inflate(res,parent,false);
+        Painter item = painters.get(position);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(ctx).inflate(res, parent, false);
         }
 
-        CheckBox check=(CheckBox)convertView.findViewById(R.id.check_painter);
-        TextView name=(TextView)convertView.findViewById(R.id.text_name);
+        CheckBox check = (CheckBox) convertView.findViewById(R.id.check_painter);
+        TextView name = (TextView) convertView.findViewById(R.id.text_name);
 
         name.setText(item.getName());
 

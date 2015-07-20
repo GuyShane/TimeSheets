@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 
 public class JobListFragmentAdapter extends FragmentPagerAdapter {
-    private static final int PAGES=2;
+    private static final int PAGES = 2;
 
     public JobListFragmentAdapter(FragmentManager manager) {
         super(manager);
@@ -25,7 +25,7 @@ public class JobListFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch(position) {
+        switch (position) {
             case 1:
                 return "COMPLETED";
             default:

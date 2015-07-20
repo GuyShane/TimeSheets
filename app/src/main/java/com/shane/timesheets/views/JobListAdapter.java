@@ -23,41 +23,41 @@ public class JobListAdapter extends ArrayAdapter<Job> {
 
     public JobListAdapter(Context context, int resource, List<Job> items) {
         super(context, resource, items);
-        this.ctx=context;
-        this.jobs=items;
-        this.df=new DateFormatter();
-        this.res=resource;
-        this.currencyFormatter =NumberFormat.getCurrencyInstance();
+        this.ctx = context;
+        this.jobs = items;
+        this.df = new DateFormatter();
+        this.res = resource;
+        this.currencyFormatter = NumberFormat.getCurrencyInstance();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Job item=jobs.get(position);
+        Job item = jobs.get(position);
 
-        if (convertView==null) {
-            convertView= LayoutInflater.from(ctx).inflate(res,parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(ctx).inflate(res, parent, false);
         }
 
-        TextView title=(TextView) convertView.findViewById(R.id.text_title);
-        TextView address=(TextView) convertView.findViewById(R.id.text_address);
-        TextView startDate=(TextView) convertView.findViewById(R.id.text_start_date);
-        TextView endDate=(TextView) convertView.findViewById(R.id.text_end_date);
-        TextView cost=(TextView) convertView.findViewById(R.id.text_cost);
+        TextView title = (TextView) convertView.findViewById(R.id.text_title);
+        TextView address = (TextView) convertView.findViewById(R.id.text_address);
+        TextView startDate = (TextView) convertView.findViewById(R.id.text_start_date);
+        TextView endDate = (TextView) convertView.findViewById(R.id.text_end_date);
+        TextView cost = (TextView) convertView.findViewById(R.id.text_cost);
 
         title.setText(item.getTitle());
-        if (item.getAddress()!=null) {
+        if (item.getAddress() != null) {
             address.setVisibility(View.VISIBLE);
             address.setText(item.getAddress());
         }
-        if (item.getStartDate()!=null) {
+        if (item.getStartDate() != null) {
             startDate.setVisibility(View.VISIBLE);
-            startDate.setText("Start date "+df.getLongDateString(item.getStartDate()));
+            startDate.setText("Start date " + df.getLongDateString(item.getStartDate()));
         }
-        if (item.getEndDate()!=null) {
+        if (item.getEndDate() != null) {
             endDate.setVisibility(View.VISIBLE);
-            endDate.setText("End date "+df.getLongDateString(item.getEndDate()));
+            endDate.setText("End date " + df.getLongDateString(item.getEndDate()));
         }
-        if (item.getCost()!=0) {
+        if (item.getCost() != 0) {
             cost.setVisibility(View.VISIBLE);
             cost.setText(currencyFormatter.format(item.getCost()));
         }

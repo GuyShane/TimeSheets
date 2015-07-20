@@ -49,50 +49,51 @@ public class JobListFragment extends Fragment {
         return fragment;
     }
 
-    public JobListFragment() {}
+    public JobListFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        num=getArguments().getInt(PAGE, 0);
+        num = getArguments().getInt(PAGE, 0);
 
-        dbHelper=new DatabaseHelper(getActivity().getApplicationContext());
+        dbHelper = new DatabaseHelper(getActivity().getApplicationContext());
 
-        jobs=dbHelper.getAllJobs(num);
+        jobs = dbHelper.getAllJobs(num);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_job_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_job_list, container, false);
 
         setupClickListeners();
 
-        addButton=(ImageButton)v.findViewById(R.id.button_add);
-        menuButton=(ImageButton)v.findViewById(R.id.button_menu);
+        addButton = (ImageButton) v.findViewById(R.id.button_add);
+        menuButton = (ImageButton) v.findViewById(R.id.button_menu);
 
         addButton.setOnClickListener(onClickAdd);
         menuButton.setOnClickListener(onClickMenu);
 
-        if (num==1) {
+        if (num == 1) {
             addButton.setVisibility(View.GONE);
         }
 
-        jobList=(ListView)v.findViewById(R.id.list_jobs);
-        adapter=new JobListAdapter(getActivity().getApplicationContext(),R.layout.item_job,jobs);
+        jobList = (ListView) v.findViewById(R.id.list_jobs);
+        adapter = new JobListAdapter(getActivity().getApplicationContext(), R.layout.item_job, jobs);
         jobList.setAdapter(adapter);
         jobList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                position-=jobList.getHeaderViewsCount();
-                Intent i=new Intent(getActivity(),JobInfoActivity.class);
-                i.putExtra(IntentExtra.JOB_ID,jobs.get(position).getId());
+                position -= jobList.getHeaderViewsCount();
+                Intent i = new Intent(getActivity(), JobInfoActivity.class);
+                i.putExtra(IntentExtra.JOB_ID, jobs.get(position).getId());
                 startActivity(i);
             }
         });
-        View footer=inflater.inflate(R.layout.footer_spacer,container,false);
-        jobList.addFooterView(footer,null,false);
+        View footer = inflater.inflate(R.layout.footer_spacer, container, false);
+        jobList.addFooterView(footer, null, false);
         return v;
     }
 
@@ -122,17 +123,17 @@ public class JobListFragment extends Fragment {
     }
 
     private void setupClickListeners() {
-        onClickMenu=new View.OnClickListener() {
+        onClickMenu = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu menu=new PopupMenu(getActivity().getApplicationContext(),v, Gravity.END);
-                menu.getMenuInflater().inflate(R.menu.menu_main,menu.getMenu());
+                PopupMenu menu = new PopupMenu(getActivity().getApplicationContext(), v, Gravity.END);
+                menu.getMenuInflater().inflate(R.menu.menu_main, menu.getMenu());
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch(item.getItemId()) {
+                        switch (item.getItemId()) {
                             case R.id.action_painters:
-                                Intent i=new Intent(getActivity(),PainterListActivity.class);
+                                Intent i = new Intent(getActivity(), PainterListActivity.class);
                                 startActivity(i);
                         }
                         return true;
@@ -142,10 +143,10 @@ public class JobListFragment extends Fragment {
             }
         };
 
-        onClickAdd=new View.OnClickListener() {
+        onClickAdd = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(getActivity(),NewJobActivity.class);
+                Intent i = new Intent(getActivity(), NewJobActivity.class);
                 startActivity(i);
             }
         };

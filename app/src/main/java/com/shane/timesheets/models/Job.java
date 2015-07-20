@@ -1,12 +1,8 @@
 package com.shane.timesheets.models;
 
-import com.shane.timesheets.DatabaseContract;
 import com.shane.timesheets.DateFormatter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class Job {
     private int id;
@@ -17,41 +13,37 @@ public class Job {
     private double cost;
     private DateFormatter df;
 
-    public Job( String title, String address, String startDate, String endDate, double cost) {
-        this.df=new DateFormatter();
+    public Job(String title, String address, String startDate, String endDate, double cost) {
+        this.df = new DateFormatter();
         this.title = title;
         this.address = address;
-        if (startDate!=null) {
-            this.startDate=df.getDate(startDate);
+        if (startDate != null) {
+            this.startDate = df.getDate(startDate);
+        } else {
+            this.startDate = null;
         }
-        else {
-            this.startDate=null;
-        }
-        if (endDate!=null) {
-            this.endDate=df.getDate(endDate);
-        }
-        else {
-            this.endDate=null;
+        if (endDate != null) {
+            this.endDate = df.getDate(endDate);
+        } else {
+            this.endDate = null;
         }
         this.cost = cost;
     }
 
     public Job(int id, String title, String address, String startDate, String endDate, double cost) {
-        this.df=new DateFormatter();
-        this.id=id;
+        this.df = new DateFormatter();
+        this.id = id;
         this.title = title;
         this.address = address;
-        if (startDate!=null) {
-            this.startDate=df.getDate(startDate);
+        if (startDate != null) {
+            this.startDate = df.getDate(startDate);
+        } else {
+            this.startDate = null;
         }
-        else {
-            this.startDate=null;
-        }
-        if (endDate!=null) {
-            this.endDate=df.getDate(endDate);
-        }
-        else {
-            this.endDate=null;
+        if (endDate != null) {
+            this.endDate = df.getDate(endDate);
+        } else {
+            this.endDate = null;
         }
         this.cost = cost;
     }
@@ -69,10 +61,9 @@ public class Job {
     }
 
     public String getStartDateString() {
-        if (startDate!=null) {
+        if (startDate != null) {
             return df.getDMYString(startDate);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -94,10 +85,9 @@ public class Job {
     }
 
     public String getEndDateString() {
-        if (endDate!=null) {
+        if (endDate != null) {
             return df.getDMYString(endDate);
-        }
-        else {
+        } else {
             return null;
         }
     }

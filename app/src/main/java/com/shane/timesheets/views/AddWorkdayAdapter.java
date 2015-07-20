@@ -18,20 +18,20 @@ public class AddWorkdayAdapter extends ArrayAdapter<Painter> {
     private int res;
 
     public AddWorkdayAdapter(Context context, int resource, List<Painter> items) {
-        super(context,resource,items);
-        this.ctx=context;
-        this.painters=items;
-        this.res=resource;
+        super(context, resource, items);
+        this.ctx = context;
+        this.painters = items;
+        this.res = resource;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Painter item=painters.get(position);
-        if (convertView==null) {
-            convertView= LayoutInflater.from(ctx).inflate(res,parent,false);
+        Painter item = painters.get(position);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(ctx).inflate(res, parent, false);
         }
 
-        TextView name=(TextView)convertView.findViewById(R.id.text_name);
+        TextView name = (TextView) convertView.findViewById(R.id.text_name);
 
         name.setText(item.getName());
 
