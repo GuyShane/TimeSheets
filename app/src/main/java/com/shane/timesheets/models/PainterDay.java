@@ -1,18 +1,23 @@
 package com.shane.timesheets.models;
 
+import java.util.Date;
+
 public class PainterDay {
     private Painter painter;
     private double hours;
+    private Date date;
     private int id;
 
-    public PainterDay(Painter painter, double hours) {
+    public PainterDay(Painter painter, double hours, Date date) {
         this.painter = painter;
         this.hours = hours;
+        this.date=date;
     }
 
-    public PainterDay(Painter painter, double hours, int id) {
+    public PainterDay(Painter painter, double hours, Date date, int id) {
         this.painter = painter;
         this.hours = hours;
+        this.date=date;
         this.id = id;
     }
 
@@ -38,5 +43,13 @@ public class PainterDay {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

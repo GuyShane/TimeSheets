@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.shane.timesheets.models.Job;
 import com.shane.timesheets.models.Painter;
+import com.shane.timesheets.models.PainterDay;
 import com.shane.timesheets.models.WorkDay;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -304,7 +306,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int getWorkDayId(int job) {
         String dateString = df.getDMYString();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select * from " + DatabaseContract.WorkDays.TABLE_NAME +
                 " where " + DatabaseContract.WorkDays.COLUMN_JOB +
                 "=" + job + " and " + DatabaseContract.WorkDays.COLUMN_DATE +
@@ -315,7 +317,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertPainterDay(Painter painter, WorkDay workDay, double hours) {
         boolean inserted = true;
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues c = new ContentValues();
         c.put(DatabaseContract.PainterDays.COLUMN_PAINTER, painter.getId());
         c.put(DatabaseContract.PainterDays.COLUMN_DATE, workDay.getId());
@@ -331,7 +333,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertPainterDay(Painter painter, int workDay, double hours) {
         boolean inserted = true;
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues c = new ContentValues();
         c.put(DatabaseContract.PainterDays.COLUMN_PAINTER, painter.getId());
         c.put(DatabaseContract.PainterDays.COLUMN_DATE, workDay);
@@ -347,7 +349,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertPainterDay(int painter, int workDay, double hours) {
         boolean inserted = true;
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues c = new ContentValues();
         c.put(DatabaseContract.PainterDays.COLUMN_PAINTER, painter);
         c.put(DatabaseContract.PainterDays.COLUMN_DATE, workDay);
@@ -359,6 +361,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             inserted = false;
         }
         return inserted;
+    }
+
+    public List<PainterDay> getPainterDays(int job, int painter) {
+        List<PainterDay> days=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor r=db.rawQuery("select "+ DatabaseContract.PainterDays.COLUMN_DATE+
+                ", sum("+ DatabaseContract.PainterDays.COLUMN_HOURS+
+                ") as "+ DatabaseContract.PainterDays.COLUMN_HOURS+
+                " from "+ DatabaseContract.PainterDays.TABLE_NAME+" " +
+                "where "+ DatabaseContract.PainterDays.COLUMN_PAINTER+"="+painter+
+                " and "+ DatabaseContract.PainterDays.COLUMN_DATE+" in " +
+                "(select "+ DatabaseContract.WorkDays._ID+
+                " from "+ DatabaseContract.WorkDays.TABLE_NAME+
+                " where "+ DatabaseContract.WorkDays.COLUMN_JOB+"="+job+") " +
+                "group by "+ DatabaseContract.PainterDays.COLUMN_DATE+";",null);
+        r.moveToFirst();
+        while (!r.isAfterLast()) {
+            int workDay=r.getInt(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_DATE));
+            double hours=r.getDouble(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_HOURS));
+            Painter p=getPainterById(painter);
+            Date date=getWorkDate(workDay);
+            days.add(new PainterDay(p,hours,date));
+            r.moveToNext();
+        }
+        r.close();
+        return days;
+    }
+
+    public Date getWorkDate(int workDay) {
+        DateFormatter df=new DateFormatter();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor r=db.rawQuery("select "+ DatabaseContract.WorkDays.COLUMN_DATE+
+                " from "+ DatabaseContract.WorkDays.TABLE_NAME+
+                " where "+ DatabaseContract.WorkDays._ID+
+                "="+workDay+";",null);
+        r.moveToFirst();
+        String dateString=r.getString(r.getColumnIndex(DatabaseContract.WorkDays.COLUMN_DATE));
+        return df.getDate(dateString);
     }
 
 }
