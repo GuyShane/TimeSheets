@@ -8,7 +8,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shane.timesheets.DatabaseHelper;
-import com.shane.timesheets.DateFormatter;
 import com.shane.timesheets.IntentExtra;
 import com.shane.timesheets.R;
 import com.shane.timesheets.models.Job;
