@@ -93,6 +93,7 @@
         android:layout_height="wrap_content"
         android:text="DAY INFO"
         android:id="@+id/button_day_info"
+        android:onClick="onClickDayInfo"
         android:layout_below="@+id/text_days_worked"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"

@@ -70,7 +70,7 @@ public class JobInfoActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(JobInfoActivity.this, PainterDayInfoActivity.class);
                 i.putExtra(IntentExtra.JOB_ID, jobId);
-                i.putExtra(IntentExtra.PAINTER_ID,painters.get(position).getId());
+                i.putExtra(IntentExtra.PAINTER_ID, painters.get(position).getId());
                 startActivity(i);
             }
         });
@@ -80,7 +80,7 @@ public class JobInfoActivity extends Activity {
         buttonAddPainter=(ImageButton)findViewById(R.id.button_add_painter);
 
         if (fromCompleted==1) {
-            buttonsGone();
+            buttonsBeGone();
         }
 
         titleText = (TextView) findViewById(R.id.text_title);
@@ -130,12 +130,18 @@ public class JobInfoActivity extends Activity {
         startActivity(i);
     }
 
+    public void onClickDayInfo(View v) {
+        Intent i=new Intent(JobInfoActivity.this,DayInfoActivity.class);
+        i.putExtra(IntentExtra.JOB_ID, jobId);
+        startActivity(i);
+    }
+
     public void markComplete() {
         dbHelper.markJobCompleted(jobId);
         finish();
     }
 
-    private void buttonsGone() {
+    private void buttonsBeGone() {
         buttonCheck.setVisibility(View.GONE);
         buttonAdd.setVisibility(View.GONE);
         buttonAddPainter.setVisibility(View.GONE);

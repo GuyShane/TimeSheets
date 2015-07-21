@@ -403,19 +403,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void markJobCompleted(int job) {
         SQLiteDatabase db = this.getReadableDatabase();
-        db.execSQL("update "+ DatabaseContract.Jobs.TABLE_NAME+
-                " set "+ DatabaseContract.Jobs.COLUMN_COMPLETED+
-                "=1 where "+ DatabaseContract.Jobs._ID+"="+job+";");
+        db.execSQL("update " + DatabaseContract.Jobs.TABLE_NAME +
+                " set " + DatabaseContract.Jobs.COLUMN_COMPLETED +
+                "=1 where " + DatabaseContract.Jobs._ID + "=" + job + ";");
         updateEndDate(job);
     }
 
     public void updateEndDate(int job) {
         SQLiteDatabase db = this.getReadableDatabase();
         String dateString='"'+df.getDMYString()+'"';
-        db.execSQL("update "+ DatabaseContract.Jobs.TABLE_NAME+
-                " set "+ DatabaseContract.Jobs.COLUMN_END_DATE+
-                "="+dateString+
-                " where "+ DatabaseContract.Jobs._ID+"="+job+";");
+        db.execSQL("update " + DatabaseContract.Jobs.TABLE_NAME +
+                " set " + DatabaseContract.Jobs.COLUMN_END_DATE +
+                "=" + dateString +
+                " where " + DatabaseContract.Jobs._ID + "=" + job + ";");
+    }
+
+    public List<WorkDay> getWorkDays(int job) {
+        List<WorkDay> days=new ArrayList<>();
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select "+ DatabaseContract.WorkDays._ID+", "+
+                DatabaseContract.WorkDays.COLUMN_DATE+
+                " from "+ DatabaseContract.WorkDays.TABLE_NAME+
+                " where "+ DatabaseContract.WorkDays.COLUMN_JOB+"="+job+";",null);
+        r.moveToFirst();
+        while(!r.isAfterLast()) {
+            int id=r.getInt(r.getColumnIndex(DatabaseContract.WorkDays._ID));
+            days.add(new WorkDay(getPainterDays(id),df.getDate(
+                    r.getString(r.getColumnIndex(DatabaseContract.WorkDays.COLUMN_DATE)))));
+            r.moveToNext();
+        }
+        r.close();
+        return days;
+    }
+
+    public List<PainterDay> getPainterDays(int workDay) {
+        List<PainterDay> days=new ArrayList<>();
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select "+ DatabaseContract.PainterDays.COLUMN_PAINTER+
+                ",sum("+ DatabaseContract.PainterDays.COLUMN_HOURS+
+                ") as "+ DatabaseContract.PainterDays.COLUMN_HOURS+
+                " from "+ DatabaseContract.PainterDays.TABLE_NAME+
+                " where "+ DatabaseContract.PainterDays.COLUMN_DATE+
+                "="+workDay+" group by "+ DatabaseContract.PainterDays.COLUMN_DATE+
+                ","+ DatabaseContract.PainterDays.COLUMN_PAINTER+";",null);
+        r.moveToFirst();
+        while (!r.isAfterLast()) {
+            int painterId=r.getInt(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_PAINTER));
+            double hours=r.getDouble(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_HOURS));
+
+            Painter p=getPainterById(painterId);
+            Date date=getWorkDate(workDay);
+
+            days.add(new PainterDay(p,hours,date));
+            r.moveToNext();
+        }
+        r.close();
+        return days;
     }
 
 }

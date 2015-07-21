@@ -19,6 +19,11 @@ public class WorkDay {
         date = new Date();
     }
 
+    public WorkDay(List<PainterDay> painterDays, Date date) {
+        this.painterDays = painterDays;
+        this.date=date;
+    }
+
     public WorkDay(int id, List<PainterDay> painterDays) {
         this.id = id;
         this.painterDays = painterDays;
