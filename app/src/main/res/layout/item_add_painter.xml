@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/bg_color"
     android:layout_height="match_parent">
 
     <CheckBox
@@ -23,8 +24,8 @@
         android:textSize="20sp"
         android:textColor="@color/text_light"
         android:id="@+id/text_name"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="13dp"
+        android:paddingTop="5dp"
         android:layout_marginStart="20dp"
+        android:layout_alignTop="@+id/check_painter"
         android:layout_toEndOf="@+id/check_painter"/>
 </RelativeLayout>

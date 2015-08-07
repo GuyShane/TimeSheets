@@ -255,7 +255,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return inserted;
     }
 
-    public boolean insertJobPainter(int job, List<Painter> painters) {
+    public boolean insertJobPainters(int job, List<Painter> painters) {
         boolean inserted = true;
         SQLiteDatabase db = this.getWritableDatabase();
         for (Painter painter : painters) {
@@ -312,7 +312,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "=" + job + " and " + DatabaseContract.WorkDays.COLUMN_DATE +
                 "=\"" + dateString + "\";", null);
         r.moveToFirst();
-        return r.getInt(r.getColumnIndex(DatabaseContract.WorkDays._ID));
+        int id=r.getInt(r.getColumnIndex(DatabaseContract.WorkDays._ID));
+        r.close();
+        return id;
     }
 
     public boolean insertPainterDay(Painter painter, WorkDay workDay, double hours) {
@@ -398,6 +400,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "="+workDay+";",null);
         r.moveToFirst();
         String dateString=r.getString(r.getColumnIndex(DatabaseContract.WorkDays.COLUMN_DATE));
+        r.close();
         return df.getDate(dateString);
     }
 

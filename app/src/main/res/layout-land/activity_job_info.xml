@@ -96,7 +96,6 @@
         android:onClick="onClickDayInfo"
         android:layout_below="@+id/text_days_worked"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginStart="30dp"
         android:layout_alignParentStart="true"/>
 
@@ -106,9 +105,9 @@
         android:text="EXPENSES"
         android:id="@+id/button_expenses"
         android:onClick="onClickExpenses"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
-        android:layout_alignBottom="@+id/button_day_info"
-        android:layout_toEndOf="@+id/button_day_info"/>
+        android:layout_below="@+id/button_day_info"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -116,14 +115,16 @@
         android:text="Painters:"
         android:id="@+id/text_painters"
         android:textSize="20sp"
-        android:layout_below="@+id/button_day_info"
-        android:layout_marginStart="10dp"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="110dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_painters"
+        android:paddingStart="300dp"
         android:footerDividersEnabled="false"
         android:layout_below="@+id/text_painters"/>
 

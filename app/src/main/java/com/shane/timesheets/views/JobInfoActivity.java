@@ -136,6 +136,10 @@ public class JobInfoActivity extends Activity {
         startActivity(i);
     }
 
+    public void onClickExpenses(View v) {
+
+    }
+
     public void markComplete() {
         dbHelper.markJobCompleted(jobId);
         finish();

@@ -61,7 +61,7 @@ public class DayInfoAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+        return groupPosition*childPosition;
     }
 
     @Override
