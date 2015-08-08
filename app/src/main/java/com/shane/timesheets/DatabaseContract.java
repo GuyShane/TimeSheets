@@ -53,6 +53,16 @@ public final class DatabaseContract {
                 COLUMN_COST + " real);";
     }
 
+    public static abstract class Expenses implements BaseColumns {
+        public static final String TABLE_NAME="expenses";
+        public static final String COLUMN_NAME="name";
+        public static final String COLUMN_COST="cost";
+        public static final String CREATE = "create table "+TABLE_NAME+" (" +
+                _ID+" integer primary key autoincrement, " +
+                COLUMN_NAME+" text not null, " +
+                COLUMN_COST+" real);";
+    }
+
     public static abstract class PainterDays implements BaseColumns {
         public static final String TABLE_NAME = "painter_days";
         public static final String COLUMN_PAINTER = "painter";

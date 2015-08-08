@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wage"
-        android:id="@+id/text_wage"
+        android:id="@+id/text_number"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:textSize="22sp"
@@ -41,9 +41,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:id="@+id/edit_wage"
+        android:id="@+id/edit_number"
         style="@style/text_option"
-        android:layout_below="@+id/text_wage"
+        android:layout_below="@+id/text_number"
         android:layout_alignParentStart="true" />
 
     <ImageButton
