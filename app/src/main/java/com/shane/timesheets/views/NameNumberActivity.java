@@ -2,6 +2,7 @@ package com.shane.timesheets.views;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,8 @@ public abstract class NameNumberActivity extends Activity {
 
     public abstract String getEmptyNameString();
     public abstract String getEmptyNumberString();
+    public abstract void onClickCheck(View v);
+    public abstract void onClickMenu(View v);
 
     protected void makeMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

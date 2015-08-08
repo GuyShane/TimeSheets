@@ -169,6 +169,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return inserted;
     }
 
+    public void updatePainter(int id,String name,double wage) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("update "+ DatabaseContract.Painters.TABLE_NAME+
+                " set "+ DatabaseContract.Painters.COLUMN_NAME+
+                "=\""+name+
+                "\","+ DatabaseContract.Painters.COLUMN_WAGE+
+                "="+wage+
+                " where "+ DatabaseContract.Painters._ID+
+                "="+id+";");
+    }
+
     public List<Painter> getAllPainters() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select * from " + DatabaseContract.Painters.TABLE_NAME + ";", null);

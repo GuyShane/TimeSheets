@@ -1,13 +1,8 @@
 package com.shane.timesheets.views;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.shane.timesheets.DatabaseHelper;
-import com.shane.timesheets.R;
 import com.shane.timesheets.models.Painter;
 
 public class NewPainterActivity extends NameNumberActivity {
@@ -18,6 +13,7 @@ public class NewPainterActivity extends NameNumberActivity {
         setupForm("Name","Wage");
     }
 
+    @Override
     public void onClickCheck(View v) {
         if (validateForm()) {
             Painter newPainter = new Painter(name, number);
@@ -30,6 +26,7 @@ public class NewPainterActivity extends NameNumberActivity {
         }
     }
 
+    @Override
     public void onClickMenu(View v) {
 
     }

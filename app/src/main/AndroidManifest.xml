@@ -49,6 +49,10 @@
             android:name=".views.DayInfoActivity"
             android:label="@string/title_activity_day_info" >
         </activity>
+        <activity
+            android:name=".views.EditPainterActivity"
+            android:label="@string/title_activity_edit_painter" >
+        </activity>
     </application>
 
 </manifest>

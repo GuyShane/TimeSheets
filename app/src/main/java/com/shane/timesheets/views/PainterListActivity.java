@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.shane.timesheets.DatabaseHelper;
+import com.shane.timesheets.IntentExtra;
 import com.shane.timesheets.R;
 import com.shane.timesheets.models.Painter;
 
@@ -31,6 +33,14 @@ public class PainterListActivity extends Activity {
         adapter = new PainterListAdapter(this, R.layout.item_painter_list, painters);
         View footer = LayoutInflater.from(this).inflate(R.layout.footer_spacer, paintersList, false);
         paintersList.addFooterView(footer, null, false);
+        paintersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=new Intent(PainterListActivity.this,EditPainterActivity.class);
+                i.putExtra(IntentExtra.PAINTER_ID, painters.get(position).getId());
+                startActivity(i);
+            }
+        });
         paintersList.setAdapter(adapter);
     }
 
