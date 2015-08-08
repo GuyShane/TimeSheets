@@ -27,11 +27,11 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_add_painter"
-        android:src="@drawable/selector_add_painter"
+        android:id="@+id/button_new_painter"
+        android:src="@drawable/selector_new_painter"
         android:background="#00000000"
         android:paddingBottom="5dp"
-        android:onClick="onClickAddPainter"
+        android:onClick="onClickNewPainter"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 

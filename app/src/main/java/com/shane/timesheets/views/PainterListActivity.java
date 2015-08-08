@@ -42,7 +42,7 @@ public class PainterListActivity extends Activity {
         adapter.notifyDataSetChanged();
     }
 
-    public void onClickAddPainter(View v) {
+    public void onClickNewPainter(View v) {
         Intent i = new Intent(PainterListActivity.this, NewPainterActivity.class);
         startActivity(i);
     }

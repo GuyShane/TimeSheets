@@ -118,11 +118,6 @@ public class NewJobActivity extends Activity {
         }
     }
 
-    public void onClickCancel(View v) {
-        makeMessage("New job cancelled");
-        finish();
-    }
-
     public void onClickMenu(View v) {
 
     }

@@ -40,11 +40,6 @@ public class NewPainterActivity extends Activity {
         }
     }
 
-    public void onClickCancel(View v) {
-        makeMessage("New painter cancelled");
-        finish();
-    }
-
     public void onClickMenu(View v) {
 
     }
