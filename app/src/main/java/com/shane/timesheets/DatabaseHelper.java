@@ -100,7 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return new Job(title, address, start, end, cost);
     }
 
-    public double getJobTotalCost(int job) {
+    private double getPainterCost(int job) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select " + DatabaseContract.PainterDays.COLUMN_PAINTER +
                 "," + DatabaseContract.PainterDays.COLUMN_HOURS + " from " +
@@ -118,6 +118,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         r.close();
         return total;
+    }
+
+    private double getExpensesCost(int job) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor r=db.rawQuery("select sum("+ DatabaseContract.Expenses.COLUMN_COST+ ") " +
+                "as "+ DatabaseContract.Expenses.COLUMN_COST+
+                " from "+ DatabaseContract.Expenses.TABLE_NAME+
+                " where "+ DatabaseContract.Expenses.COLUMN_JOB+"="+job+";",null);
+        r.moveToFirst();
+        double total=r.getDouble(r.getColumnIndex(DatabaseContract.Expenses.COLUMN_COST));
+        r.close();
+        return total;
+    }
+
+    public double getJobTotalCost(int job) {
+        return getPainterCost(job)+getExpensesCost(job);
     }
 
     public Painter getPainterById(int id) {

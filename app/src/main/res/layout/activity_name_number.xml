@@ -20,6 +20,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
         android:id="@+id/edit_name"
         style="@style/text_option"
         android:layout_below="@+id/text_name"
