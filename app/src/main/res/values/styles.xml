@@ -6,7 +6,18 @@
         <item name="android:windowActionBar">false</item>
     </style>
 
-    <style name="text_heading">
+    <style name="text_header">
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:background">#ff000000</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="text_prompt">
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">#fffefefe</item>
         <item name="android:layout_marginTop">15dp</item>

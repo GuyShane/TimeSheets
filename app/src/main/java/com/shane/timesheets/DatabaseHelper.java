@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.shane.timesheets.models.Expense;
 import com.shane.timesheets.models.Job;
 import com.shane.timesheets.models.Painter;
 import com.shane.timesheets.models.PainterDay;
@@ -19,11 +20,12 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "app.db";
+    private static final int version=2;
 
     private DateFormatter df;
 
     public DatabaseHelper(Context ctx) {
-        super(ctx, DB_NAME, null, 1);
+        super(ctx, DB_NAME, null, version);
         df = new DateFormatter();
     }
 
@@ -34,11 +36,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.WorkDays.CREATE);
         db.execSQL(DatabaseContract.JobPainters.CREATE);
         db.execSQL(DatabaseContract.PainterDays.CREATE);
+        db.execSQL(DatabaseContract.Expenses.CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion==1 && newVersion==2) {
+            db.execSQL(DatabaseContract.Expenses.CREATE);
+        }
     }
 
     public boolean insertJob(Job job) {
@@ -473,6 +478,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         r.close();
         return days;
+    }
+
+    public List<Expense> getExpenses(int job) {
+        List<Expense> expenses=new ArrayList<>();
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select * from "+ DatabaseContract.Expenses.TABLE_NAME+
+                " where "+ DatabaseContract.Expenses.COLUMN_JOB+
+                "="+job+";",null);
+        r.moveToFirst();
+        while(!r.isAfterLast()) {
+            int id=r.getInt(r.getColumnIndex(DatabaseContract.Expenses._ID));
+            String name=r.getString(r.getColumnIndex(DatabaseContract.Expenses.COLUMN_NAME));
+            double cost=r.getDouble(r.getColumnIndex(DatabaseContract.Expenses.COLUMN_COST));
+
+            expenses.add(new Expense(id,name,cost));
+
+            r.moveToNext();
+        }
+        r.close();
+        return expenses;
+    }
+
+    public boolean insertExpense(Expense expense, int job) {
+        boolean inserted=true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues c = new ContentValues();
+        c.put(DatabaseContract.Expenses.COLUMN_NAME,expense.getName());
+        c.put(DatabaseContract.Expenses.COLUMN_COST,expense.getCost());
+        c.put(DatabaseContract.Expenses.COLUMN_JOB,job);
+        try {
+            db.insertOrThrow(DatabaseContract.Expenses.TABLE_NAME,null,c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            inserted=false;
+        }
+        return inserted;
     }
 
 }

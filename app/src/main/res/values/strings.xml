@@ -15,4 +15,6 @@
     <string name="title_activity_painter_day_info">PainterDayInfoActivity</string>
     <string name="title_activity_day_info">DayInfoActivity</string>
     <string name="title_activity_edit_painter">EditPainterActivity</string>
+    <string name="title_activity_expense_list">ExpenseListActivity</string>
+    <string name="title_activity_new_expense">NewExpenseActivity</string>
 </resources>

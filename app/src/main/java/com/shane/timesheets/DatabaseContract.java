@@ -57,10 +57,13 @@ public final class DatabaseContract {
         public static final String TABLE_NAME="expenses";
         public static final String COLUMN_NAME="name";
         public static final String COLUMN_COST="cost";
+        public static final String COLUMN_JOB="job";
         public static final String CREATE = "create table "+TABLE_NAME+" (" +
                 _ID+" integer primary key autoincrement, " +
                 COLUMN_NAME+" text not null, " +
-                COLUMN_COST+" real);";
+                COLUMN_COST+" real, "+
+                COLUMN_JOB+" integer, foreign key("+COLUMN_JOB+") references "+
+                Jobs._ID+");";
     }
 
     public static abstract class PainterDays implements BaseColumns {

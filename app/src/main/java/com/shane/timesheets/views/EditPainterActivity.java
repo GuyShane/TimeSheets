@@ -12,15 +12,14 @@ import com.shane.timesheets.models.Painter;
 
 public class EditPainterActivity extends NameNumberActivity {
     private int painterId;
-    private Painter painter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras=getIntent().getExtras();
         painterId=extras.getInt(IntentExtra.PAINTER_ID);
-        painter = dbHelper.getPainterById(painterId);
-        setupForm("Name","Wage",painter.getName(),painter.getWage());
+        Painter painter = dbHelper.getPainterById(painterId);
+        setupForm("Name","Wage", painter.getName(), painter.getWage());
     }
 
     @Override
