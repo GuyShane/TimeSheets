@@ -4,8 +4,6 @@ import android.provider.BaseColumns;
 
 public final class DatabaseContract {
 
-    public static final String COUNT="count";
-
     public DatabaseContract() {
     }
 

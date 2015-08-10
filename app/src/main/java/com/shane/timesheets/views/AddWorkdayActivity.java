@@ -1,6 +1,8 @@
 package com.shane.timesheets.views;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -8,16 +10,20 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shane.timesheets.DatabaseHelper;
+import com.shane.timesheets.DateFormatter;
 import com.shane.timesheets.IntentExtra;
 import com.shane.timesheets.R;
 import com.shane.timesheets.models.Painter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AddWorkdayActivity extends Activity {
@@ -29,17 +35,43 @@ public class AddWorkdayActivity extends Activity {
     private List<Double> hours;
     private CheckBox check;
     private TextView hoursText;
+    private EditText editDate;
     private DecimalFormat nf;
+    private DateFormatter df;
+    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workday);
 
+        ctx=this;
+
         nf=new DecimalFormat();
         nf.setDecimalSeparatorAlwaysShown(false);
 
+        df=new DateFormatter();
+
         jobId = getIntent().getIntExtra(IntentExtra.JOB_ID, 0);
+
+        final Calendar cal= Calendar.getInstance();
+        editDate=(EditText)findViewById(R.id.edit_date);
+        editDate.setText(df.getLongDateString());
+        editDate.setTag(df.getDMYString());
+        final DatePickerDialog datePicker = new DatePickerDialog(ctx,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        editDate.setText(df.getLongDateString(year, monthOfYear, dayOfMonth));
+                        editDate.setTag(df.getDMYString(year, monthOfYear, dayOfMonth));
+                    }
+                }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        editDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePicker.show();
+            }
+        });
 
         dbHelper = new DatabaseHelper(this);
         painters = dbHelper.getPaintersOnJob(jobId);
@@ -87,12 +119,13 @@ public class AddWorkdayActivity extends Activity {
     }
 
     public void onClickCheck(View v) {
-        if (!dbHelper.isWorkDayToday(jobId)) {
-            if (dbHelper.insertNewWorkDay(jobId)) {
+        String dateString=(String)editDate.getTag();
+        if (!dbHelper.isWorkDay(jobId,dateString)) {
+            if (dbHelper.insertNewWorkDay(jobId,dateString)) {
                 //TODO handle error
             }
         }
-        int workDay = dbHelper.getWorkDayId(jobId);
+        int workDay = dbHelper.getWorkDayId(jobId,dateString);
         SparseBooleanArray checked = painterList.getCheckedItemPositions();
         for (int i = 0; i < checked.size(); i++) {
             if (checked.valueAt(i)) {

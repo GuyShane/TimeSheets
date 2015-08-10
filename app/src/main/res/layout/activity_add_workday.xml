@@ -5,12 +5,35 @@
     android:background="@color/bg_color"
     tools:context="com.shane.timesheets.views.AddWorkdayActivity">
 
+    <TextView
+        style="@style/text_header"
+        android:text="Add new workday"
+        android:id="@+id/text_header" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/text_prompt"
+        android:text="Date"
+        android:id="@+id/text_date"
+        android:layout_below="@+id/text_header"
+        android:layout_marginStart="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_date"
+        style="@style/text_option"
+        android:inputType="date"
+        android:focusable="false"
+        android:layout_below="@+id/text_date"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/list_painters_present"
         android:footerDividersEnabled="false"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/edit_date"
         android:layout_centerHorizontal="true" />
 
     <ImageButton
@@ -33,4 +56,6 @@
         android:paddingBottom="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
+
+
 </RelativeLayout>

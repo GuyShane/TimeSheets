@@ -19,6 +19,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private static final String COUNT="count";
     private static final String DB_NAME = "app.db";
     private static final int version=2;
 
@@ -308,13 +309,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         boolean exists = false;
         String dateString = df.getDMYString();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor r = db.rawQuery("select count(*) from " + DatabaseContract.WorkDays.TABLE_NAME +
+        Cursor r = db.rawQuery("select count(*) as "+COUNT+" from " + DatabaseContract.WorkDays.TABLE_NAME +
                 " where " + DatabaseContract.WorkDays.COLUMN_JOB +
                 "=" + job + " and " + DatabaseContract.WorkDays.COLUMN_DATE +
                 "=\"" + dateString + "\";", null);
         r.moveToFirst();
         if (r.getCount() > 0 && r.getColumnCount() > 0) {
-            exists = r.getInt(0) > 0;
+            exists = r.getInt(r.getColumnIndex(COUNT)) > 0;
+        }
+        r.close();
+        return exists;
+    }
+
+    public boolean isWorkDay(int job, String dateString) {
+        boolean exists = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor r = db.rawQuery("select count(*) as "+COUNT+" from " + DatabaseContract.WorkDays.TABLE_NAME +
+                " where " + DatabaseContract.WorkDays.COLUMN_JOB +
+                "=" + job + " and " + DatabaseContract.WorkDays.COLUMN_DATE +
+                "=\"" + dateString + "\";", null);
+        r.moveToFirst();
+        if (r.getCount() > 0 && r.getColumnCount() > 0) {
+            exists = r.getInt(r.getColumnIndex(COUNT)) > 0;
         }
         r.close();
         return exists;
@@ -336,8 +352,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return inserted;
     }
 
+    public boolean insertNewWorkDay(int job, String dateString) {
+        boolean inserted = true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues c = new ContentValues();
+        c.put(DatabaseContract.WorkDays.COLUMN_JOB, job);
+        c.put(DatabaseContract.WorkDays.COLUMN_DATE, dateString);
+        try {
+            db.insertOrThrow(DatabaseContract.WorkDays.TABLE_NAME, null, c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            inserted = false;
+        }
+        return inserted;
+    }
+
     public int getWorkDayId(int job) {
         String dateString = df.getDMYString();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor r = db.rawQuery("select * from " + DatabaseContract.WorkDays.TABLE_NAME +
+                " where " + DatabaseContract.WorkDays.COLUMN_JOB +
+                "=" + job + " and " + DatabaseContract.WorkDays.COLUMN_DATE +
+                "=\"" + dateString + "\";", null);
+        r.moveToFirst();
+        int id=r.getInt(r.getColumnIndex(DatabaseContract.WorkDays._ID));
+        r.close();
+        return id;
+    }
+
+    public int getWorkDayId(int job, String dateString) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select * from " + DatabaseContract.WorkDays.TABLE_NAME +
                 " where " + DatabaseContract.WorkDays.COLUMN_JOB +
