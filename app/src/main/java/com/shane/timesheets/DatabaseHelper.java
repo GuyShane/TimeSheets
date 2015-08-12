@@ -307,7 +307,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean isWorkDayToday(int job) {
         boolean exists = false;
-        String dateString = df.getDMYString();
+        String dateString = df.getYMDString();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select count(*) as "+COUNT+" from " + DatabaseContract.WorkDays.TABLE_NAME +
                 " where " + DatabaseContract.WorkDays.COLUMN_JOB +
@@ -338,7 +338,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertNewWorkDay(int job) {
         boolean inserted = true;
-        String dateString = df.getDMYString();
+        String dateString = df.getYMDString();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues c = new ContentValues();
         c.put(DatabaseContract.WorkDays.COLUMN_JOB, job);
@@ -368,7 +368,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getWorkDayId(int job) {
-        String dateString = df.getDMYString();
+        String dateString = df.getYMDString();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor r = db.rawQuery("select * from " + DatabaseContract.WorkDays.TABLE_NAME +
                 " where " + DatabaseContract.WorkDays.COLUMN_JOB +
@@ -456,7 +456,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         r.moveToFirst();
         while (!r.isAfterLast()) {
             int workDay=r.getInt(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_DATE));
-            double hours=r.getDouble(r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_HOURS));
+            double hours=Math.abs(r.getDouble(
+                    r.getColumnIndex(DatabaseContract.PainterDays.COLUMN_HOURS)));
             Painter p=getPainterById(painter);
             Date date=getWorkDate(workDay);
             days.add(new PainterDay(p,hours,date));
@@ -489,7 +490,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void updateEndDate(int job) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String dateString='"'+df.getDMYString()+'"';
+        String dateString='"'+df.getYMDString()+'"';
         db.execSQL("update " + DatabaseContract.Jobs.TABLE_NAME +
                 " set " + DatabaseContract.Jobs.COLUMN_END_DATE +
                 "=" + dateString +
@@ -502,7 +503,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor r=db.rawQuery("select "+ DatabaseContract.WorkDays._ID+", "+
                 DatabaseContract.WorkDays.COLUMN_DATE+
                 " from "+ DatabaseContract.WorkDays.TABLE_NAME+
-                " where "+ DatabaseContract.WorkDays.COLUMN_JOB+"="+job+";",null);
+                " where "+ DatabaseContract.WorkDays.COLUMN_JOB+"="+job+
+                " order by "+ DatabaseContract.WorkDays.COLUMN_DATE+";",null);
         r.moveToFirst();
         while(!r.isAfterLast()) {
             int id=r.getInt(r.getColumnIndex(DatabaseContract.WorkDays._ID));
@@ -512,6 +514,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         r.close();
         return days;
+    }
+
+    public void deleteWorkDays(String dateString) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        db.execSQL("delete from " + DatabaseContract.WorkDays.TABLE_NAME +
+                " where " + DatabaseContract.WorkDays.COLUMN_DATE + "=\"" + dateString + "\";");
     }
 
     public List<PainterDay> getPainterDays(int workDay) {

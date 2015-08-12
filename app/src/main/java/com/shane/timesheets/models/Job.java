@@ -62,7 +62,7 @@ public class Job {
 
     public String getStartDateString() {
         if (startDate != null) {
-            return df.getDMYString(startDate);
+            return df.getYMDString(startDate);
         } else {
             return null;
         }
@@ -86,7 +86,7 @@ public class Job {
 
     public String getEndDateString() {
         if (endDate != null) {
-            return df.getDMYString(endDate);
+            return df.getYMDString(endDate);
         } else {
             return null;
         }

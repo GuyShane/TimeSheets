@@ -20,6 +20,8 @@ import com.shane.timesheets.DateFormatter;
 import com.shane.timesheets.IntentExtra;
 import com.shane.timesheets.R;
 import com.shane.timesheets.models.Painter;
+import com.shane.timesheets.models.PainterDay;
+import com.shane.timesheets.models.WorkDay;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class AddWorkdayActivity extends Activity {
     private DecimalFormat nf;
     private DateFormatter df;
     private Context ctx;
+    private String dateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +60,13 @@ public class AddWorkdayActivity extends Activity {
         final Calendar cal= Calendar.getInstance();
         editDate=(EditText)findViewById(R.id.edit_date);
         editDate.setText(df.getLongDateString());
-        editDate.setTag(df.getDMYString());
+        editDate.setTag(df.getYMDString());
         final DatePickerDialog datePicker = new DatePickerDialog(ctx,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         editDate.setText(df.getLongDateString(year, monthOfYear, dayOfMonth));
-                        editDate.setTag(df.getDMYString(year, monthOfYear, dayOfMonth));
+                        editDate.setTag(df.getYMDString(year, monthOfYear, dayOfMonth));
                     }
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         editDate.setOnClickListener(new View.OnClickListener() {
@@ -119,11 +122,21 @@ public class AddWorkdayActivity extends Activity {
     }
 
     public void onClickCheck(View v) {
-        String dateString=(String)editDate.getTag();
+        dateString=(String)editDate.getTag();
         if (!dbHelper.isWorkDay(jobId,dateString)) {
-            if (dbHelper.insertNewWorkDay(jobId,dateString)) {
-                //TODO handle error
-            }
+            dbHelper.insertNewWorkDay(jobId,dateString);
+            saveWorkDay(false);
+        }
+        else {
+            WorkDayExistsDialog dialog=new WorkDayExistsDialog();
+            dialog.show(getFragmentManager(),"Work day exists dialog");
+        }
+    }
+
+    public void saveWorkDay(boolean overwrite) {
+        if (overwrite) {
+            dbHelper.deleteWorkDays(dateString);
+            dbHelper.insertNewWorkDay(jobId,dateString);
         }
         int workDay = dbHelper.getWorkDayId(jobId,dateString);
         SparseBooleanArray checked = painterList.getCheckedItemPositions();

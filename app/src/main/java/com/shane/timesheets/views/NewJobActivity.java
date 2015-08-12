@@ -75,13 +75,13 @@ public class NewJobActivity extends Activity {
     private void setupForm() {
         final Calendar cal = Calendar.getInstance();
         startDateText.setText(df.getShortDateString());
-        startDateText.setTag(df.getDMYString());
+        startDateText.setTag(df.getYMDString());
         final DatePickerDialog startDatePicker = new DatePickerDialog(ctx,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         startDateText.setText(df.getShortDateString(year, monthOfYear, dayOfMonth));
-                        startDateText.setTag(df.getDMYString(year, monthOfYear, dayOfMonth));
+                        startDateText.setTag(df.getYMDString(year, monthOfYear, dayOfMonth));
                     }
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         startDateText.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +95,7 @@ public class NewJobActivity extends Activity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         endDateText.setText(df.getShortDateString(year, monthOfYear, dayOfMonth));
-                        endDateText.setTag(df.getDMYString(year, monthOfYear, dayOfMonth));
+                        endDateText.setTag(df.getYMDString(year, monthOfYear, dayOfMonth));
                     }
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         endDateText.setOnClickListener(new View.OnClickListener() {

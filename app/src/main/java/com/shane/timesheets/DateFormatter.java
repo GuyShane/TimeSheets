@@ -48,25 +48,25 @@ public class DateFormatter {
     }
 
 
-    public String getDMYString() {
-        formatter.applyLocalizedPattern("dd-MM-yyyy");
+    public String getYMDString() {
+        formatter.applyLocalizedPattern("yyyy-MM-dd");
         return formatter.format(new Date());
     }
 
-    public String getDMYString(int year, int month, int day) {
-        formatter.applyLocalizedPattern("dd-MM-yyyy");
+    public String getYMDString(int year, int month, int day) {
+        formatter.applyLocalizedPattern("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         c.set(year, month, day);
         return formatter.format(c.getTime());
     }
 
-    public String getDMYString(Date date) {
-        formatter.applyLocalizedPattern("dd-MM-yyyy");
+    public String getYMDString(Date date) {
+        formatter.applyLocalizedPattern("yyyy-MM-dd");
         return formatter.format(date);
     }
 
     public Date getDate(String dateString) {
-        formatter.applyLocalizedPattern("dd-MM-yyyy");
+        formatter.applyLocalizedPattern("yyyy-MM-dd");
         try {
             return formatter.parse(dateString);
         } catch (ParseException e) {
