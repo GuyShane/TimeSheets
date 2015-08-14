@@ -139,6 +139,7 @@ public class JobInfoActivity extends Activity {
     public void onClickExpenses(View v) {
         Intent i=new Intent(JobInfoActivity.this,ExpenseListActivity.class);
         i.putExtra(IntentExtra.JOB_ID, jobId);
+        i.putExtra(IntentExtra.FROM_COMPLETED,fromCompleted);
         startActivity(i);
     }
 
