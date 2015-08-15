@@ -22,7 +22,7 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:name=".views.JobInfoActivity"
+            android:name=".views.JobInfoDisplayActivity"
             android:label="@string/title_activity_job_info" >
         </activity>
         <activity

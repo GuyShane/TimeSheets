@@ -21,7 +21,7 @@ import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
-public class JobInfoActivity extends Activity {
+public class JobInfoDisplayActivity extends Activity {
     private int fromCompleted;
     private int jobId;
     private Job job;
@@ -68,7 +68,7 @@ public class JobInfoActivity extends Activity {
         painterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(JobInfoActivity.this, PainterDayInfoActivity.class);
+                Intent i = new Intent(JobInfoDisplayActivity.this, PainterDayInfoActivity.class);
                 i.putExtra(IntentExtra.JOB_ID, jobId);
                 i.putExtra(IntentExtra.PAINTER_ID, painters.get(position).getId());
                 startActivity(i);
@@ -119,25 +119,25 @@ public class JobInfoActivity extends Activity {
     }
 
     public void onClickAddWorkday(View v) {
-        Intent i = new Intent(JobInfoActivity.this, AddWorkdayActivity.class);
+        Intent i = new Intent(JobInfoDisplayActivity.this, AddWorkdayActivity.class);
         i.putExtra(IntentExtra.JOB_ID, jobId);
         startActivity(i);
     }
 
     public void onClickAddPainter(View v) {
-        Intent i = new Intent(JobInfoActivity.this, AddPainterActivity.class);
+        Intent i = new Intent(JobInfoDisplayActivity.this, AddPainterActivity.class);
         i.putExtra(IntentExtra.JOB_ID, jobId);
         startActivity(i);
     }
 
     public void onClickDayInfo(View v) {
-        Intent i=new Intent(JobInfoActivity.this,DayInfoActivity.class);
+        Intent i=new Intent(JobInfoDisplayActivity.this,DayInfoActivity.class);
         i.putExtra(IntentExtra.JOB_ID, jobId);
         startActivity(i);
     }
 
     public void onClickExpenses(View v) {
-        Intent i=new Intent(JobInfoActivity.this,ExpenseListActivity.class);
+        Intent i=new Intent(JobInfoDisplayActivity.this,ExpenseListActivity.class);
         i.putExtra(IntentExtra.JOB_ID, jobId);
         i.putExtra(IntentExtra.FROM_COMPLETED,fromCompleted);
         startActivity(i);

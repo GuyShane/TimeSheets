@@ -25,6 +25,8 @@ import java.util.List;
 
 public class JobListFragment extends Fragment {
     private static final String PAGE = "page";
+    private static int COMPLETED=1;
+    private static int IN_PROGRESS=0;
 
     private DatabaseHelper dbHelper;
 
@@ -56,7 +58,7 @@ public class JobListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        num = getArguments().getInt(PAGE, 0);
+        num = getArguments().getInt(PAGE, IN_PROGRESS);
 
         dbHelper = new DatabaseHelper(getActivity().getApplicationContext());
 
@@ -76,20 +78,31 @@ public class JobListFragment extends Fragment {
         addButton.setOnClickListener(onClickAdd);
         menuButton.setOnClickListener(onClickMenu);
 
-        if (num == 1) {
-            addButton.setVisibility(View.GONE);
-        }
-
         jobList = (ListView) v.findViewById(R.id.list_jobs);
         adapter = new JobListAdapter(getActivity().getApplicationContext(), R.layout.item_job, jobs);
         jobList.setAdapter(adapter);
+
+        if (num == COMPLETED) {
+            addButton.setVisibility(View.GONE);
+        }
+        else {
+            jobList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent i = new Intent(getActivity(), NewJobActivity.class);
+                    startActivity(i);
+                    return true;
+                }
+            });
+        }
+
         jobList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 position -= jobList.getHeaderViewsCount();
-                Intent i = new Intent(getActivity(), JobInfoActivity.class);
+                Intent i = new Intent(getActivity(), JobInfoDisplayActivity.class);
                 i.putExtra(IntentExtra.JOB_ID, jobs.get(position).getId());
-                i.putExtra(IntentExtra.FROM_COMPLETED,num);
+                i.putExtra(IntentExtra.FROM_COMPLETED, num);
                 startActivity(i);
             }
         });

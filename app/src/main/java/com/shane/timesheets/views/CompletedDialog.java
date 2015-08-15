@@ -10,7 +10,7 @@ public class CompletedDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final JobInfoActivity caller=(JobInfoActivity)getActivity();
+        final JobInfoDisplayActivity caller=(JobInfoDisplayActivity)getActivity();
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Job completed")
                 .setMessage("Mark this job as complete?")

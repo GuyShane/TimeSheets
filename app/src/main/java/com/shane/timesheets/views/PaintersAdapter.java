@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * This is an adapter to display a list of apinters currently on a given job.
- * It is used from JobInfoActivity
+ * It is used from JobInfoDisplayActivity
  */
 public class PaintersAdapter extends ArrayAdapter<Painter> {
     private List<Painter> painters;

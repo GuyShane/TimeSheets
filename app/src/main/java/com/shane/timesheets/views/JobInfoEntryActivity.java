@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -14,13 +12,11 @@ import android.widget.Toast;
 import com.shane.timesheets.DatabaseHelper;
 import com.shane.timesheets.DateFormatter;
 import com.shane.timesheets.R;
-import com.shane.timesheets.models.Job;
 
 import java.util.Calendar;
+import java.util.Date;
 
-
-public class NewJobActivity extends Activity {
-
+public abstract class JobInfoEntryActivity extends Activity {
 
     private EditText titleText;
     private EditText addressText;
@@ -53,13 +49,11 @@ public class NewJobActivity extends Activity {
         this.dbHelper = new DatabaseHelper(ctx);
         this.df = new DateFormatter();
 
-        setupForm();
+        setupDateListeners();
     }
 
-    private void setupForm() {
+    private void setupDateListeners() {
         final Calendar cal = Calendar.getInstance();
-        startDateText.setText(df.getShortDateString());
-        startDateText.setTag(df.getYMDString());
         final DatePickerDialog startDatePicker = new DatePickerDialog(ctx,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -90,23 +84,35 @@ public class NewJobActivity extends Activity {
         });
     }
 
-    public void onClickCheck(View v) {
-        if (validateForm()) {
-            Job newJob = new Job(title, address, startDate, endDate, cost);
-            if (dbHelper.insertJob(newJob)) {
-                makeMessage("Job saved");
-                finish();
-            } else {
-                makeMessage("Save failed");
-            }
+    public void setupForm() {
+        startDateText.setText(df.getShortDateString());
+        startDateText.setTag(df.getYMDString());
+    }
+
+    public void setupForm(String title, String address, Date startDate, Date endDate, double cost) {
+        if (title!=null) {
+            titleText.setText(title);
+        }
+        if (address!=null) {
+            addressText.setText(address);
+        }
+        if (startDate!=null) {
+            startDateText.setText(df.getShortDateString(startDate));
+            startDateText.setTag(df.getYMDString(startDate));
+        }
+        if (endDate!=null) {
+            endDateText.setText(df.getShortDateString(endDate));
+            endDateText.setTag(df.getYMDString(endDate));
+        }
+        if (cost!=0) {
+            costText.setText(String.valueOf(cost));
         }
     }
 
-    public void onClickMenu(View v) {
+    public abstract void onClickCheck(View v);
+    public abstract void onClickMenu(View v);
 
-    }
-
-    private boolean validateForm() {
+    public boolean validateForm() {
         if (titleText.getText().toString().isEmpty()) {
             makeMessage("You need to set a title, man");
             return false;
@@ -141,7 +147,8 @@ public class NewJobActivity extends Activity {
         return true;
     }
 
-    private void makeMessage(String message) {
+    public void makeMessage(String message) {
         Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
     }
+
 }
