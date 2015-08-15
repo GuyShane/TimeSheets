@@ -17,4 +17,5 @@
     <string name="title_activity_edit_painter">EditPainterActivity</string>
     <string name="title_activity_expense_list">ExpenseListActivity</string>
     <string name="title_activity_new_expense">NewExpenseActivity</string>
+    <string name="title_activity_edit_job">EditJobActivity</string>
 </resources>

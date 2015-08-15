@@ -48,7 +48,7 @@ public class JobInfoDisplayActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_info);
+        setContentView(R.layout.activity_job_info_display);
 
         Bundle extras=getIntent().getExtras();
         fromCompleted=extras.getInt(IntentExtra.FROM_COMPLETED);

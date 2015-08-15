@@ -65,6 +65,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return inserted;
     }
 
+    private String nullString(String in) {
+        if (in==null) {
+            return "";
+        }
+        else {
+            return in;
+        }
+    }
+
+    public void updateJob(int id, String title, String address,
+                             String startDate, String endDate, double cost) {
+        title=nullString(title);
+        address=nullString(address);
+        startDate=nullString(startDate);
+        endDate=nullString(endDate);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("update "+ DatabaseContract.Jobs.TABLE_NAME+
+                " set "+ DatabaseContract.Jobs.COLUMN_TITLE+
+                "=\""+title+"\","+ DatabaseContract.Jobs.COLUMN_ADDRESS+"=\""+address+
+                "\","+ DatabaseContract.Jobs.COLUMN_START_DATE+"=\""+startDate+
+                "\","+ DatabaseContract.Jobs.COLUMN_END_DATE+"=\""+endDate+
+                "\","+ DatabaseContract.Jobs.COLUMN_COST+"="+cost+
+                " where "+ DatabaseContract.Jobs._ID+"="+id+";");
+    }
+
     public List<Job> getAllJobs(int completed) {
         List<Job> jobs = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();

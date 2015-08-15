@@ -61,6 +61,11 @@
             android:name=".views.NewExpenseActivity"
             android:label="@string/title_activity_new_expense" >
         </activity>
+        <activity
+            android:name=".views.EditJobActivity"
+            android:label="@string/title_activity_edit_job"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
     </application>
 
 </manifest>

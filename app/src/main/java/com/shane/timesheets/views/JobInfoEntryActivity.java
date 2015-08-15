@@ -24,20 +24,20 @@ public abstract class JobInfoEntryActivity extends Activity {
     private EditText endDateText;
     private EditText costText;
 
-    private DatabaseHelper dbHelper;
-    private DateFormatter df;
-    private Context ctx;
+    protected DatabaseHelper dbHelper;
+    protected DateFormatter df;
+    protected Context ctx;
 
-    private String title;
-    private String address;
-    private String startDate;
-    private String endDate;
-    private double cost;
+    protected String title;
+    protected String address;
+    protected String startDate;
+    protected String endDate;
+    protected double cost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_job);
+        setContentView(R.layout.activity_job_info_entry);
 
         this.ctx = this;
         titleText = (EditText) findViewById(R.id.edit_title);
@@ -111,6 +111,14 @@ public abstract class JobInfoEntryActivity extends Activity {
 
     public abstract void onClickCheck(View v);
     public abstract void onClickMenu(View v);
+
+    public String getStartDateString() {
+        return (String) startDateText.getTag();
+    }
+
+    public String getEndDateString() {
+        return (String) endDateText.getTag();
+    }
 
     public boolean validateForm() {
         if (titleText.getText().toString().isEmpty()) {

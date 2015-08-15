@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/edit_title"
                 style="@style/text_option"
+                android:inputType="textCapSentences"
                 android:layout_below="@+id/text_title"
                 android:layout_alignParentStart="true" />
 

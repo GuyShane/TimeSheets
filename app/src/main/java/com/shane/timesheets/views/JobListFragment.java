@@ -89,7 +89,8 @@ public class JobListFragment extends Fragment {
             jobList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent i = new Intent(getActivity(), NewJobActivity.class);
+                    Intent i = new Intent(getActivity(), EditJobActivity.class);
+                    i.putExtra(IntentExtra.JOB_ID,jobs.get(position).getId());
                     startActivity(i);
                     return true;
                 }
