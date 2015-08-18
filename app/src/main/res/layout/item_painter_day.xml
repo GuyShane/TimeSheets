@@ -6,7 +6,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mon, Jun 3"
         android:id="@+id/text_date"
         android:textSize="18sp"
         android:textColor="@color/text_light"
@@ -19,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-"
+        android:text="@string/string_day_info_dash"
         android:id="@+id/text_dash"
         android:textSize="18sp"
         android:textColor="@color/text_light"
@@ -31,7 +30,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="8"
         android:id="@+id/text_hours"
         android:textSize="18sp"
         android:textColor="@color/text_light"
@@ -42,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hours"
+        android:text="@string/string_day_info_hours"
         android:id="@+id/text_worked"
         android:textSize="18sp"
         android:textColor="@color/text_light"

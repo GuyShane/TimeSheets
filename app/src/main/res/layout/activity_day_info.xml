@@ -8,7 +8,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Job name"
         android:id="@+id/text_job_name"
         android:textSize="22sp"
         android:textColor="@color/text_light"
@@ -20,7 +19,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Days worked"
         android:id="@+id/text_days_worked"
         android:textSize="22sp"
         android:textColor="@color/text_dark_gray"

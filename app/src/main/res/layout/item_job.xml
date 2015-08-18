@@ -7,7 +7,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Job title"
         android:id="@+id/text_title"
         android:textColor="@color/text_light"
         android:textSize="21sp"
@@ -19,7 +18,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address"
         android:id="@+id/text_address"
         android:textColor="@color/text_light_blue"
         android:textSize="18sp"
@@ -30,7 +28,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start date"
         android:id="@+id/text_start_date"
         android:layout_below="@+id/text_address"
         android:textSize="16sp"
@@ -42,7 +39,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="End date"
         android:id="@+id/text_end_date"
         android:textSize="16sp"
         android:textColor="@color/text_dark_gray"
@@ -53,7 +49,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$"
         android:id="@+id/text_cost"
         android:textColor="@color/text_light_gray"
         android:textSize="18sp"

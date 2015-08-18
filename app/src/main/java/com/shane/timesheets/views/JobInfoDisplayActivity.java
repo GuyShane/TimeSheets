@@ -93,9 +93,11 @@ public class JobInfoDisplayActivity extends Activity {
 
         setText(titleText, job.getTitle(), null, null);
         setText(addressText, job.getAddress(), null, null);
-        setText(startText, job.getStartDate(), "Start date ", null);
-        setText(endText, job.getEndDate(), "End date ", null);
-        setText(costEstimateText, job.getCost(), "Estimated cost ", null);
+        setText(startText, job.getStartDate(),
+                getString(R.string.string_job_info_start_date), null);
+        setText(endText, job.getEndDate(), getString(R.string.string_job_info_end_date), null);
+        setText(costEstimateText, job.getCost(),
+                getString(R.string.string_job_info_estimated_cost), null);
     }
 
     @Override
@@ -104,11 +106,12 @@ public class JobInfoDisplayActivity extends Activity {
         painters.clear();
         painters.addAll(dbHelper.getPaintersOnJob(jobId));
         adapter.notifyDataSetChanged();
-        setTextZero(costTotalText, dbHelper.getJobTotalCost(jobId), "Total cost ", null);
+        setTextZero(costTotalText, dbHelper.getJobTotalCost(jobId),
+                getString(R.string.string_job_info_total_cost), null);
         int daysWorked=dbHelper.getDaysWorked(jobId);
-        String endText=" days worked";
+        String endText=getString(R.string.string_days_worked);
         if (daysWorked==1) {
-            endText=" day worked";
+            endText=getString(R.string.string_day_worked);
         }
         setText(daysText, daysWorked, null, endText);
     }

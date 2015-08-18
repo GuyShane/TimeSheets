@@ -37,6 +37,7 @@ public abstract class JobInfoEntryActivity extends Activity {
     private EditText startDateText;
     private EditText endDateText;
     private EditText costText;
+    private TextView headerText;
     private TextView painterText;
 
     protected DatabaseHelper dbHelper;
@@ -86,6 +87,7 @@ public abstract class JobInfoEntryActivity extends Activity {
         endDateText = (EditText) formView.findViewById(R.id.edit_end_date);
         costText = (EditText) formView.findViewById(R.id.edit_cost);
 
+        headerText=(TextView)findViewById(R.id.text_header);
         painterText=(TextView) formView.findViewById(R.id.text_painters);
 
         this.dbHelper = new DatabaseHelper(ctx);
@@ -160,6 +162,10 @@ public abstract class JobInfoEntryActivity extends Activity {
     public abstract void onClickCheck(View v);
     public abstract void onClickMenu(View v);
 
+    public void setHeaderText(String header) {
+        headerText.setText(header);
+    }
+
     public String getStartDateString() {
         return (String) startDateText.getTag();
     }
@@ -170,7 +176,7 @@ public abstract class JobInfoEntryActivity extends Activity {
 
     public boolean validateForm() {
         if (titleText.getText().toString().isEmpty()) {
-            makeMessage("You need to set a title, man");
+            makeMessage(getString(R.string.toast_job_info_title_empty));
             return false;
         } else {
             title = titleText.getText().toString();

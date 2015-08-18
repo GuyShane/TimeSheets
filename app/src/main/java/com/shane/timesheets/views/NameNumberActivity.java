@@ -19,6 +19,7 @@ public abstract class NameNumberActivity extends Activity {
     protected EditText numberText;
     protected TextView namePrompt;
     protected TextView numberPrompt;
+    private TextView headerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public abstract class NameNumberActivity extends Activity {
         setContentView(R.layout.activity_name_number);
         dbHelper = new DatabaseHelper(this);
 
+        headerText=(TextView) findViewById(R.id.text_header);
         nameText = (EditText) findViewById(R.id.edit_name);
         numberText = (EditText) findViewById(R.id.edit_number);
         namePrompt=(TextView) findViewById(R.id.text_name);
@@ -42,6 +44,10 @@ public abstract class NameNumberActivity extends Activity {
         this.numberPrompt.setText(numberPrompt);
         this.nameText.setText(name);
         this.numberText.setText(String.valueOf(wage));
+    }
+
+    public void setHeaderText(String header) {
+        headerText.setText(header);
     }
 
     protected boolean validateForm() {

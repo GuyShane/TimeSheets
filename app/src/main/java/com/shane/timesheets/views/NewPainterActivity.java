@@ -3,6 +3,7 @@ package com.shane.timesheets.views;
 import android.os.Bundle;
 import android.view.View;
 
+import com.shane.timesheets.R;
 import com.shane.timesheets.models.Painter;
 
 public class NewPainterActivity extends NameNumberActivity {
@@ -10,7 +11,9 @@ public class NewPainterActivity extends NameNumberActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupForm("Name","Wage");
+        setupForm(getString(R.string.string_new_painter_name_prompt),
+                getString(R.string.string_new_painter_number_prompt));
+        setHeaderText(getString(R.string.header_edit_painter));
     }
 
     @Override
@@ -18,10 +21,10 @@ public class NewPainterActivity extends NameNumberActivity {
         if (validateForm()) {
             Painter newPainter = new Painter(name, number);
             if (dbHelper.insertPainter(newPainter)) {
-                makeMessage("Painter saved");
+                makeMessage(getString(R.string.toast_painter_saved));
                 finish();
             } else {
-                makeMessage("Save failed");
+                makeMessage(getString(R.string.toast_save_failed));
             }
         }
     }
@@ -33,11 +36,11 @@ public class NewPainterActivity extends NameNumberActivity {
 
     @Override
     public String getEmptyNameString() {
-        return "They gotta have a name";
+        return getString(R.string.toast_new_painter_name_empty);
     }
 
     @Override
     public String getEmptyNumberString() {
-        return "You gotta pay them something...";
+        return getString(R.string.toast_new_painter_number_empty);
     }
 }

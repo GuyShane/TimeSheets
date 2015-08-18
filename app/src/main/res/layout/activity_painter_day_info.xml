@@ -8,7 +8,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Belgravia"
         android:id="@+id/text_job_name"
         android:textSize="22sp"
         android:textColor="@color/text_light"
@@ -20,7 +19,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shane"
         android:id="@+id/text_painter"
         android:textSize="20sp"
         android:textColor="@color/text_light_gray"
@@ -30,7 +28,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$18"
         android:id="@+id/text_wage"
         android:textSize="20sp"
         android:textColor="@color/text_light_gray"
@@ -41,7 +38,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="/h"
+        android:text="@string/string_painter_per_hour"
         android:id="@+id/text_per_hour"
         android:textSize="20sp"
         android:textColor="@color/text_light_gray"
@@ -51,7 +48,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="18 hours worked total"
         android:id="@+id/text_hours_worked"
         android:textSize="20sp"
         android:textColor="@color/text_dark_gray"
@@ -62,7 +58,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Owed $324.00"
         android:id="@+id/text_amount_due"
         android:textSize="20sp"
         android:textColor="@color/text_dark_gray"

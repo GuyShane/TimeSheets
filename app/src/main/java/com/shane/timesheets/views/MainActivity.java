@@ -17,7 +17,7 @@ public class MainActivity extends FragmentActivity implements JobListFragment.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fragAdapter = new JobListFragmentAdapter(getSupportFragmentManager());
+        fragAdapter = new JobListFragmentAdapter(getSupportFragmentManager(),this);
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(fragAdapter);
     }

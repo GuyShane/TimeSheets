@@ -6,7 +6,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Painter"
         android:textSize="21sp"
         android:textColor="@color/text_light"
         android:id="@+id/text_painter"
@@ -18,7 +17,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$"
         android:textSize="18sp"
         android:textColor="@color/text_dark_gray"
         android:layout_marginStart="30dp"
@@ -30,7 +28,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="/h"
+        android:text="@string/string_painter_per_hour"
         android:textColor="@color/text_dark_gray"
         android:textSize="18sp"
         android:id="@+id/text_per_hour"

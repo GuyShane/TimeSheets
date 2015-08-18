@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.shane.timesheets.IntentExtra;
+import com.shane.timesheets.R;
 import com.shane.timesheets.models.Job;
 
 public class EditJobActivity extends JobInfoEntryActivity {
@@ -16,13 +17,14 @@ public class EditJobActivity extends JobInfoEntryActivity {
         Job job=dbHelper.getJobById(jobId);
         setupForm(job.getTitle(),job.getAddress(),
                 job.getStartDate(),job.getEndDate(),job.getCost());
+        setHeaderText(getString(R.string.header_edit_job));
     }
 
     @Override
     public void onClickCheck(View v) {
         if (validateForm()) {
             dbHelper.updateJob(jobId,title,address,getStartDateString(),getEndDateString(),cost);
-            makeMessage("Job updated");
+            makeMessage(getString(R.string.toast_job_updated));
             finish();
         }
     }

@@ -51,11 +51,13 @@ public class JobListAdapter extends ArrayAdapter<Job> {
         }
         if (item.getStartDate() != null) {
             startDate.setVisibility(View.VISIBLE);
-            startDate.setText("Start date " + df.getLongDateString(item.getStartDate()));
+            startDate.setText(ctx.getString(R.string.string_job_info_start_date) +
+                    df.getLongDateString(item.getStartDate()));
         }
         if (item.getEndDate() != null) {
             endDate.setVisibility(View.VISIBLE);
-            endDate.setText("End date " + df.getLongDateString(item.getEndDate()));
+            endDate.setText(ctx.getString(R.string.string_job_info_end_date) +
+                    df.getLongDateString(item.getEndDate()));
         }
         if (item.getCost() != 0) {
             cost.setVisibility(View.VISIBLE);

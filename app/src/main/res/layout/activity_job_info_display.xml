@@ -8,7 +8,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
         android:id="@+id/text_title"
         android:textSize="22sp"
         android:textColor="@color/text_light"
@@ -20,7 +19,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address"
         android:visibility="gone"
         android:id="@+id/text_address"
         android:textSize="18sp"
@@ -32,7 +30,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start date"
         android:visibility="gone"
         android:id="@+id/text_start_date"
         android:textSize="16sp"
@@ -45,7 +42,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="End date"
         android:visibility="gone"
         android:id="@+id/text_end_date"
         android:textSize="16sp"
@@ -57,7 +53,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Estimated cost"
         android:visibility="gone"
         android:id="@+id/text_cost_estimate"
         android:textSize="18sp"
@@ -70,7 +65,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total cost"
         android:id="@+id/text_cost_total"
         android:textSize="18sp"
         android:textColor="@color/text_light_gray"
@@ -81,7 +75,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Days worked"
         android:id="@+id/text_days_worked"
         android:textSize="18sp"
         android:layout_marginStart="10dp"
@@ -91,7 +84,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DAY INFO"
+        android:text="@string/string_button_day_info"
         android:id="@+id/button_day_info"
         android:onClick="onClickDayInfo"
         android:layout_below="@+id/text_days_worked"
@@ -103,7 +96,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EXPENSES"
+        android:text="@string/string_button_expenses"
         android:id="@+id/button_expenses"
         android:onClick="onClickExpenses"
         android:layout_marginStart="30dp"
@@ -113,7 +106,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Painters:"
+        android:text="@string/string_job_info_painters"
         android:id="@+id/text_painters"
         android:textSize="20sp"
         android:layout_below="@+id/button_day_info"

@@ -23,8 +23,8 @@ public class HoursPickerDialog extends DialogFragment {
         View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_hours_picker, null, false);
         final EditText hourPicker = (EditText) v.findViewById(R.id.edit_hours);
         builder.setView(v);
-        builder.setTitle("Hours worked");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.title_hours_picker));
+        builder.setPositiveButton(getString(R.string.string_button_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (hourPicker.getText().toString().isEmpty()) {
@@ -35,7 +35,7 @@ public class HoursPickerDialog extends DialogFragment {
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.string_button_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 caller.toggleChecked(pos);

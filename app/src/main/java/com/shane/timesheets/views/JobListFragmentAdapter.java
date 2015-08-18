@@ -1,16 +1,21 @@
 package com.shane.timesheets.views;
 
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.shane.timesheets.R;
+
 
 public class JobListFragmentAdapter extends FragmentPagerAdapter {
     private static final int PAGES = 2;
+    private Context ctx;
 
-    public JobListFragmentAdapter(FragmentManager manager) {
+    public JobListFragmentAdapter(FragmentManager manager, Context context) {
         super(manager);
+        ctx=context;
     }
 
     @Override
@@ -27,9 +32,9 @@ public class JobListFragmentAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 1:
-                return "COMPLETED";
+                return ctx.getString(R.string.tab_completed);
             default:
-                return "IN PROGRESS";
+                return ctx.getString(R.string.tab_in_progress);
         }
     }
 }

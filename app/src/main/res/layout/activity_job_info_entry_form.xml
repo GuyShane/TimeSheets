@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text="@string/string_job_info_title_prompt"
         style="@style/text_prompt"
         android:id="@+id/text_title"
         android:layout_alignParentTop="true"
@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address"
+        android:text="@string/string_job_info_address_prompt"
         style="@style/text_prompt"
         android:id="@+id/text_address"
         android:layout_below="@+id/edit_title"/>
@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start date"
+        android:text="@string/string_job_info_start_date_prompt"
         style="@style/text_prompt"
         android:id="@+id/text_start_date"
         android:layout_below="@+id/edit_address"/>
@@ -57,7 +57,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="End date"
+        android:text="@string/string_job_info_end_date_prompt"
         style="@style/text_prompt"
         android:id="@+id/text_end_date"
         android:layout_below="@+id/edit_start_date"/>
@@ -74,7 +74,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Estimated price"
+        android:text="@string/string_job_info_estimated_cost_prompt"
         style="@style/text_prompt"
         android:id="@+id/text_cost"
         android:layout_below="@+id/edit_end_date"/>
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/text_prompt"
-        android:text="Painters"
+        android:text="@string/string_job_info_painters"
         android:id="@+id/text_painters"
         android:layout_below="@+id/edit_cost"/>
 

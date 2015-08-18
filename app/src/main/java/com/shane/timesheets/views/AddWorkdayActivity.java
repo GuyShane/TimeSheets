@@ -155,7 +155,7 @@ public class AddWorkdayActivity extends Activity {
     public void setHours(int position, Double value) {
         hours.set(position, value);
         check.setChecked(true);
-        hoursText.setText("Hours: " + nf.format(value));
+        hoursText.setText(getString(R.string.string_painter_hours) + nf.format(value));
         hoursText.setVisibility(View.VISIBLE);
     }
 

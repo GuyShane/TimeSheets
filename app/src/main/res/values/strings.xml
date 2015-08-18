@@ -1,11 +1,6 @@
 <resources>
     <string name="app_name">TimeSheets</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_settings">settings</string>
     <string name="title_activity_new_job">NewJobActivity</string>
     <string name="title_activity_job_info">JobInfoActivity</string>
     <string name="title_activity_painter_list">PainterListActivity</string>
@@ -18,4 +13,64 @@
     <string name="title_activity_expense_list">ExpenseListActivity</string>
     <string name="title_activity_new_expense">NewExpenseActivity</string>
     <string name="title_activity_edit_job">EditJobActivity</string>
+
+    <string name="string_painter_hours">Hours:\u0020</string>
+    <string name="title_completed_dialog">Job completed</string>
+    <string name="string_completed_dialog_message">Mark this job as complete?</string>
+    <string name="string_button_ok">OK</string>
+    <string name="string_button_cancel">CANCEL</string>
+    <string name="string_days_worked">\u0020days worked</string>
+    <string name="string_day_worked">\u0020day worked</string>
+    <string name="header_edit_job">Edit job info</string>
+    <string name="toast_job_updated">Job updated</string>
+    <string name="string_edit_painter_name_prompt">Name</string>
+    <string name="string_edit_painter_number_prompt">Wage</string>
+    <string name="header_edit_painter">Edit painter information</string>
+    <string name="toast_painter_updated">Painter updated</string>
+    <string name="toast_edit_painter_name_empty">You can\'t take away their name</string>
+    <string name="toast_edit_painter_number_empty">Not going to pay them anymore?</string>
+    <string name="title_hours_picker">Hours</string>
+    <string name="string_job_info_start_date">Start date\u0020</string>
+    <string name="string_job_info_end_date">End date\u0020</string>
+    <string name="string_job_info_estimated_cost">Estimated cost\u0020</string>
+    <string name="string_job_info_total_cost">Total cost\u0020</string>
+    <string name="toast_job_info_title_empty">You need to set a title, man</string>
+    <string name="tab_completed">COMPLETED</string>
+    <string name="tab_in_progress">IN PROGRESS</string>
+    <string name="string_expense_name_prompt">Name</string>
+    <string name="string_expense_number_prompt">Cost</string>
+    <string name="header_new_expense">Add new expense</string>
+    <string name="toast_expense_saved">Expense saved</string>
+    <string name="toast_save_failed">Save failed</string>
+    <string name="toast_expense_name_empty">The expense must have a title</string>
+    <string name="toast_expense_number_empty">It had to cost something, no?</string>
+    <string name="header_new_job">Create a new job</string>
+    <string name="toast_job_saved">Job saved</string>
+    <string name="string_new_painter_name_prompt">Name</string>
+    <string name="string_new_painter_number_prompt">Wage</string>
+    <string name="header_new_painter">Create a new painter</string>
+    <string name="toast_painter_saved">Painter saved</string>
+    <string name="toast_new_painter_name_empty">They gotta have a name</string>
+    <string name="toast_new_painter_number_empty">You gotta pay them something…</string>
+    <string name="string_painter_info_hours_worked">\u0020hours worked total</string>
+    <string name="string_painter_info_owed">\u0020owed</string>
+    <string name="string_button_add">ADD</string>
+    <string name="string_button_overwrite">OVERWRITE</string>
+    <string name="title_workday_exists_dialog">Workday exists</string>
+    <string name="string_workday_exists_dialog_message">There is already a workday for this date. Would you like to overwrite the existing hours, or add to them?</string>
+    <string name="header_add_workday">Add new workday</string>
+    <string name="string_date_prompt">Date</string>
+    <string name="header_expenses">Expenses</string>
+    <string name="string_button_day_info">DAY INFO</string>
+    <string name="string_button_expenses">EXPENSES</string>
+    <string name="string_job_info_painters">Painters:</string>
+    <string name="string_job_info_title_prompt">Title</string>
+    <string name="string_job_info_address_prompt">Address</string>
+    <string name="string_job_info_start_date_prompt">Start date</string>
+    <string name="string_job_info_end_date_prompt">End date</string>
+    <string name="string_job_info_estimated_cost_prompt">Estimated price</string>
+    <string name="string_painter_per_hour">/h</string>
+    <string name="header_painter_list">Painters</string>
+    <string name="string_day_info_dash">-</string>
+    <string name="string_day_info_hours">hours</string>
 </resources>

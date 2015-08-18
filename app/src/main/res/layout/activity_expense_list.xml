@@ -6,7 +6,7 @@
 
     <TextView
         style="@style/text_header"
-        android:text="Expenses"
+        android:text="@string/header_expenses"
         android:id="@+id/text_expenses_header"/>
 
     <ListView

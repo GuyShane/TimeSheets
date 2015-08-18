@@ -7,14 +7,14 @@
 
     <TextView
         style="@style/text_header"
-        android:text="Add new workday"
+        android:text="@string/header_add_workday"
         android:id="@+id/text_header" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/text_prompt"
-        android:text="Date"
+        android:text="@string/string_date_prompt"
         android:id="@+id/text_date"
         android:layout_below="@+id/text_header"
         android:layout_marginStart="10dp"/>

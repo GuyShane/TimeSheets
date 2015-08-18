@@ -9,7 +9,7 @@
         android:id="@+id/text_painter"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/text_light"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"

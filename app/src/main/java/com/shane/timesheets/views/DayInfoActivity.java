@@ -51,9 +51,9 @@ public class DayInfoActivity extends Activity {
         days.clear();
         days.addAll(dbHelper.getWorkDays(jobId));
         adapter.notifyDataSetChanged();
-        String endText=" days worked";
+        String endText=getString(R.string.string_days_worked);
         if (days.size()==1) {
-            endText=" day worked";
+            endText=getString(R.string.string_day_worked);
         }
         daysText.setText(days.size()+endText);
     }

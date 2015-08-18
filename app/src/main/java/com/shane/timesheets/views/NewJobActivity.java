@@ -27,6 +27,7 @@ public class NewJobActivity extends JobInfoEntryActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupForm();
+        setHeaderText(getString(R.string.header_new_job));
     }
 
     @Override
@@ -43,10 +44,10 @@ public class NewJobActivity extends JobInfoEntryActivity {
                         dbHelper.insertJobPainter(jobId, p);
                     }
                 }
-                makeMessage("Job saved");
+                makeMessage(getString(R.string.toast_job_saved));
                 finish();
             } else {
-                makeMessage("Save failed");
+                makeMessage(getString(R.string.toast_save_failed));
             }
         }
     }

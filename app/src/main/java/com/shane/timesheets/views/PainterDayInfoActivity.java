@@ -66,8 +66,9 @@ public class PainterDayInfoActivity extends Activity {
         jobName.setText(job.getTitle());
         painterName.setText(painter.getName());
         painterWage.setText(cf.format(painter.getWage()));
-        hoursWorked.setText(nf.format(totalHours)+" hours worked total");
-        amountDue.setText(cf.format(owed)+" owed");
+        hoursWorked.setText(nf.format(totalHours)+
+                getString(R.string.string_painter_info_hours_worked));
+        amountDue.setText(cf.format(owed)+getString(R.string.string_painter_info_owed));
     }
 
     @Override

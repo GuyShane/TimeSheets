@@ -1,9 +1,6 @@
 package com.shane.timesheets.views;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.shane.timesheets.IntentExtra;
@@ -19,14 +16,17 @@ public class EditPainterActivity extends NameNumberActivity {
         Bundle extras=getIntent().getExtras();
         painterId=extras.getInt(IntentExtra.PAINTER_ID);
         Painter painter = dbHelper.getPainterById(painterId);
-        setupForm("Name","Wage", painter.getName(), painter.getWage());
+        setupForm(getString(R.string.string_edit_painter_name_prompt),
+                getString(R.string.string_edit_painter_number_prompt),
+                painter.getName(), painter.getWage());
+        setHeaderText(getString(R.string.header_edit_painter));
     }
 
     @Override
     public void onClickCheck(View v) {
         if (validateForm()) {
             dbHelper.updatePainter(painterId,name,number);
-            makeMessage("Painter updated");
+            makeMessage(getString(R.string.toast_painter_updated));
             finish();
         }
     }
@@ -38,11 +38,11 @@ public class EditPainterActivity extends NameNumberActivity {
 
     @Override
     public String getEmptyNameString() {
-        return "You can't take away their name";
+        return getString(R.string.toast_edit_painter_name_empty);
     }
 
     @Override
     public String getEmptyNumberString() {
-        return "Not going to pay them anymore?";
+        return getString(R.string.toast_edit_painter_number_empty);
     }
 }
