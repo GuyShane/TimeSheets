@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    tools:context="com.shane.timesheets.views.NewJobActivity">
+    tools:context="com.shane.timesheets.views.JobInfoEntryActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -98,10 +98,20 @@
                 android:layout_alignParentStart="true" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_prompt"
+                android:text="Painters"
+                android:id="@+id/text_painters"
+                android:layout_below="@+id/edit_cost"/>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:id="@+id/list_spacer"
                 android:layout_below="@+id/edit_cost"/>
+
+
 
         </RelativeLayout>
     </ScrollView>

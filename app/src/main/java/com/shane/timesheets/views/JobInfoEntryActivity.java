@@ -37,7 +37,7 @@ public abstract class JobInfoEntryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_info_entry);
+        setContentView(R.layout.activity_job_info_entry_form);
 
         this.ctx = this;
         titleText = (EditText) findViewById(R.id.edit_title);
