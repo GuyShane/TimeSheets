@@ -25,8 +25,8 @@
     <string name="toast_job_updated">Job updated</string>
     <string name="string_edit_painter_name_prompt">Name</string>
     <string name="string_edit_painter_number_prompt">Wage</string>
-    <string name="header_edit_painter">Edit painter information</string>
-    <string name="toast_painter_updated">Painter updated</string>
+    <string name="header_edit_painter">Edit worker information</string>
+    <string name="toast_painter_updated">Worker updated</string>
     <string name="toast_edit_painter_name_empty">You can\'t take away their name</string>
     <string name="toast_edit_painter_number_empty">Not going to pay them anymore?</string>
     <string name="title_hours_picker">Hours</string>
@@ -48,8 +48,8 @@
     <string name="toast_job_saved">Job saved</string>
     <string name="string_new_painter_name_prompt">Name</string>
     <string name="string_new_painter_number_prompt">Wage</string>
-    <string name="header_new_painter">Create a new painter</string>
-    <string name="toast_painter_saved">Painter saved</string>
+    <string name="header_new_painter">Create a new worker</string>
+    <string name="toast_painter_saved">Worker saved</string>
     <string name="toast_new_painter_name_empty">They gotta have a name</string>
     <string name="toast_new_painter_number_empty">You gotta pay them something…</string>
     <string name="string_painter_info_hours_worked">\u0020hours worked total</string>
@@ -63,14 +63,22 @@
     <string name="header_expenses">Expenses</string>
     <string name="string_button_day_info">DAY INFO</string>
     <string name="string_button_expenses">EXPENSES</string>
-    <string name="string_job_info_painters">Painters:</string>
+    <string name="string_job_info_painters">Workers:</string>
     <string name="string_job_info_title_prompt">Title</string>
     <string name="string_job_info_address_prompt">Address</string>
     <string name="string_job_info_start_date_prompt">Start date</string>
     <string name="string_job_info_end_date_prompt">End date</string>
     <string name="string_job_info_estimated_cost_prompt">Estimated price</string>
     <string name="string_painter_per_hour">/h</string>
-    <string name="header_painter_list">Painters</string>
+    <string name="header_painter_list">Workers</string>
     <string name="string_day_info_dash">-</string>
     <string name="string_day_info_hours">hours</string>
+    <string name="menu_main_workers">Workers</string>
+    <string name="header_edit_expense">Edit expense information</string>
+    <string name="toast_edit_expense_name_empty">The expense must have a name</string>
+    <string name="toast_edit_expense_number_empty">The expense must cost something</string>
+    <string name="string_edit_expense_name_prompt">Name</string>
+    <string name="string_edit_expense_number_prompt">Cost</string>
+    <string name="toast_expense_updated">Expense updated</string>
+    <string name="title_activity_edit_expense">EditExpenseActivity</string>
 </resources>

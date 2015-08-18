@@ -604,6 +604,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return expenses;
     }
 
+    public Expense getExpense(int id) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor r=db.rawQuery("select * from " + DatabaseContract.Expenses.TABLE_NAME +
+                " where " + DatabaseContract.Expenses._ID + "=" + id + ";", null);
+        r.moveToFirst();
+        String name=r.getString(r.getColumnIndex(DatabaseContract.Expenses.COLUMN_NAME));
+        double cost=r.getDouble(r.getColumnIndex(DatabaseContract.Expenses.COLUMN_COST));
+        r.close();
+        return new Expense(id,name,cost);
+    }
+
+    public void updateExpense(int id, String name, double cost) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("update "+ DatabaseContract.Expenses.TABLE_NAME+
+                " set "+ DatabaseContract.Expenses.COLUMN_NAME+
+                "=\""+name+"\", "+ DatabaseContract.Expenses.COLUMN_COST+
+                "="+cost+" where "+ DatabaseContract.Expenses._ID+"="+id+";");
+    }
+
     public boolean insertExpense(Expense expense, int job) {
         boolean inserted=true;
         SQLiteDatabase db = this.getWritableDatabase();

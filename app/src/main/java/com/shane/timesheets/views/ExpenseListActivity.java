@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -46,6 +47,14 @@ public class ExpenseListActivity extends Activity {
         adapter=new ExpenseListAdapter(this,R.layout.item_expense,expenses);
         View footer = LayoutInflater.from(this).inflate(R.layout.footer_spacer, expenseList, false);
         expenseList.addFooterView(footer,null,false);
+        expenseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=new Intent(ExpenseListActivity.this,EditExpenseActivity.class);
+                i.putExtra(IntentExtra.EXPENSE_ID,expenses.get(position).getId());
+                startActivity(i);
+            }
+        });
         expenseList.setAdapter(adapter);
     }
 
