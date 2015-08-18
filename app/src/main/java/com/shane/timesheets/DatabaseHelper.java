@@ -90,6 +90,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " where "+ DatabaseContract.Jobs._ID+"="+id+";");
     }
 
+    public int getJobId(String title) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor r=db.rawQuery("select "+ DatabaseContract.Jobs._ID+
+                " from "+ DatabaseContract.Jobs.TABLE_NAME+
+                " where "+ DatabaseContract.Jobs.COLUMN_TITLE+
+                "=\""+title+"\";",null);
+        r.moveToFirst();
+        int id=r.getInt(r.getColumnIndex(DatabaseContract.Jobs._ID));
+        r.close();
+        return id;
+    }
+
     public List<Job> getAllJobs(int completed) {
         List<Job> jobs = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();

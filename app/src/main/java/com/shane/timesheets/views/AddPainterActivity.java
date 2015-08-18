@@ -3,6 +3,7 @@ package com.shane.timesheets.views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -36,6 +37,9 @@ public class AddPainterActivity extends Activity {
         painters = dbHelper.getPaintersNotOnJob(jobId);
 
         painterList = (ListView) findViewById(R.id.list_painters);
+        View footerView= LayoutInflater.from(this).
+                inflate(R.layout.footer_spacer, painterList, false);
+        painterList.addFooterView(footerView,null,false);
         adapter = new AddPainterAdapter(this, R.layout.item_add_painter, painters);
         painterList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         painterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -5,137 +5,94 @@
     android:background="@color/bg_color"
     tools:context="com.shane.timesheets.views.JobInfoEntryActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        style="@style/text_prompt"
+        android:id="@+id/text_title"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_alignParentStart="true" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_title"
+        style="@style/text_option"
+        android:inputType="textCapSentences"
+        android:layout_below="@+id/text_title"
+        android:layout_alignParentStart="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                style="@style/text_prompt"
-                android:id="@+id/text_title"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_title"
-                style="@style/text_option"
-                android:inputType="textCapSentences"
-                android:layout_below="@+id/text_title"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Address"
-                style="@style/text_prompt"
-                android:id="@+id/text_address"
-                android:layout_below="@+id/edit_title"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_address"
-                style="@style/text_option"
-                android:layout_below="@+id/text_address"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Start date"
-                style="@style/text_prompt"
-                android:id="@+id/text_start_date"
-                android:layout_below="@+id/edit_address"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_start_date"
-                style="@style/text_option"
-                android:inputType="date"
-                android:focusable="false"
-                android:layout_below="@+id/text_start_date"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="End date"
-                style="@style/text_prompt"
-                android:id="@+id/text_end_date"
-                android:layout_below="@+id/edit_start_date"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_end_date"
-                style="@style/text_option"
-                android:inputType="date"
-                android:focusable="false"
-                android:layout_below="@+id/text_end_date"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Estimated price"
-                style="@style/text_prompt"
-                android:id="@+id/text_cost"
-                android:layout_below="@+id/edit_end_date"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_cost"
-                style="@style/text_option"
-                android:inputType="numberDecimal"
-                android:layout_below="@+id/text_cost"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/text_prompt"
-                android:text="Painters"
-                android:id="@+id/text_painters"
-                android:layout_below="@+id/edit_cost"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:id="@+id/list_spacer"
-                android:layout_below="@+id/edit_cost"/>
-
-
-
-        </RelativeLayout>
-    </ScrollView>
-
-    <ImageButton
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_check"
-        android:src="@drawable/selector_check"
-        android:onClick="onClickCheck"
-        android:background="#00000000"
-        android:paddingBottom="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:text="Address"
+        style="@style/text_prompt"
+        android:id="@+id/text_address"
+        android:layout_below="@+id/edit_title"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_address"
+        style="@style/text_option"
+        android:layout_below="@+id/text_address"
+        android:layout_alignParentStart="true" />
 
-    <ImageButton
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_menu"
-        android:onClick="onClickMenu"
-        android:src="@drawable/selector_menu"
-        android:background="#00000000"
-        android:paddingBottom="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:text="Start date"
+        style="@style/text_prompt"
+        android:id="@+id/text_start_date"
+        android:layout_below="@+id/edit_address"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_start_date"
+        style="@style/text_option"
+        android:inputType="date"
+        android:focusable="false"
+        android:layout_below="@+id/text_start_date"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End date"
+        style="@style/text_prompt"
+        android:id="@+id/text_end_date"
+        android:layout_below="@+id/edit_start_date"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_end_date"
+        style="@style/text_option"
+        android:inputType="date"
+        android:focusable="false"
+        android:layout_below="@+id/text_end_date"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estimated price"
+        style="@style/text_prompt"
+        android:id="@+id/text_cost"
+        android:layout_below="@+id/edit_end_date"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_cost"
+        style="@style/text_option"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/text_cost"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/text_prompt"
+        android:text="Painters"
+        android:id="@+id/text_painters"
+        android:layout_below="@+id/edit_cost"/>
 
 </RelativeLayout>

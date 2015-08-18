@@ -4,25 +4,40 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shane.timesheets.DatabaseHelper;
 import com.shane.timesheets.DateFormatter;
 import com.shane.timesheets.R;
+import com.shane.timesheets.models.Painter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public abstract class JobInfoEntryActivity extends Activity {
+
+    protected ListView painterList;
+    private AddPainterAdapter adapter;
+    protected List<Painter> painters;
 
     private EditText titleText;
     private EditText addressText;
     private EditText startDateText;
     private EditText endDateText;
     private EditText costText;
+    private TextView painterText;
 
     protected DatabaseHelper dbHelper;
     protected DateFormatter df;
@@ -37,14 +52,41 @@ public abstract class JobInfoEntryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_info_entry_form);
+        setContentView(R.layout.activity_job_info_entry_list);
 
         this.ctx = this;
-        titleText = (EditText) findViewById(R.id.edit_title);
-        addressText = (EditText) findViewById(R.id.edit_address);
-        startDateText = (EditText) findViewById(R.id.edit_start_date);
-        endDateText = (EditText) findViewById(R.id.edit_end_date);
-        costText = (EditText) findViewById(R.id.edit_cost);
+
+        painterList=(ListView)findViewById(R.id.list_painters);
+        View formView = LayoutInflater.from(ctx).
+                inflate(R.layout.activity_job_info_entry_form, painterList, false);
+        View footerView=LayoutInflater.from(ctx).
+                inflate(R.layout.footer_spacer, painterList, false);
+        painters=new ArrayList<>();
+        adapter=new AddPainterAdapter(ctx,R.layout.item_add_painter,painters);
+        painterList.addHeaderView(formView, null, false);
+        painterList.addFooterView(footerView, null, false);
+        painterList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        painterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SparseBooleanArray checked = painterList.getCheckedItemPositions();
+                CheckBox check = (CheckBox) view.findViewById(R.id.check_painter);
+                for (int i = 0; i < checked.size(); i++) {
+                    if (checked.keyAt(i) == position) {
+                        check.setChecked(checked.valueAt(i));
+                    }
+                }
+            }
+        });
+        painterList.setAdapter(adapter);
+
+        titleText = (EditText) formView.findViewById(R.id.edit_title);
+        addressText = (EditText) formView.findViewById(R.id.edit_address);
+        startDateText = (EditText) formView.findViewById(R.id.edit_start_date);
+        endDateText = (EditText) formView.findViewById(R.id.edit_end_date);
+        costText = (EditText) formView.findViewById(R.id.edit_cost);
+
+        painterText=(TextView) formView.findViewById(R.id.text_painters);
 
         this.dbHelper = new DatabaseHelper(ctx);
         this.df = new DateFormatter();
@@ -85,11 +127,17 @@ public abstract class JobInfoEntryActivity extends Activity {
     }
 
     public void setupForm() {
+        painters.clear();
+        painters.addAll(dbHelper.getAllPainters());
+        adapter.notifyDataSetChanged();
         startDateText.setText(df.getShortDateString());
         startDateText.setTag(df.getYMDString());
     }
 
     public void setupForm(String title, String address, Date startDate, Date endDate, double cost) {
+        painters.clear();
+        adapter.notifyDataSetChanged();
+        painterText.setVisibility(View.GONE);
         if (title!=null) {
             titleText.setText(title);
         }
