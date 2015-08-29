@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TimeSheets</string>
+    <string name="app_name">TrackerKeeper</string>
     <string name="action_settings">settings</string>
     <string name="title_activity_new_job">NewJobActivity</string>
     <string name="title_activity_job_info">JobInfoActivity</string>
