@@ -3,11 +3,14 @@ package com.shane.timesheets.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.shane.timesheets.DatabaseHelper;
@@ -149,6 +152,32 @@ public class JobInfoDisplayActivity extends Activity {
     public void markComplete() {
         dbHelper.markJobCompleted(jobId);
         finish();
+    }
+
+    public void onClickMenu(View v) {
+        PopupMenu menu = new PopupMenu(getApplicationContext(), v, Gravity.END);
+        menu.getMenuInflater().inflate(R.menu.menu_job_info_display, menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_help:
+                        HelpDialog help;
+                        if (fromCompleted==1) {
+                            help=new HelpDialog(
+                                    getString(R.string.action_help_job_info_complete));
+                        }
+                        else {
+                            help=new HelpDialog(
+                                    getString(R.string.action_help_job_info_not_complete));
+                        }
+                        help.show(getFragmentManager(),"Help Dialog");
+                        break;
+                }
+                return true;
+            }
+        });
+        menu.show();
     }
 
     private void buttonsBeGone() {

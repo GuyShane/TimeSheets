@@ -42,9 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion==1 && newVersion==2) {
-            db.execSQL(DatabaseContract.Expenses.CREATE);
-        }
+
     }
 
     public boolean insertJob(Job job) {

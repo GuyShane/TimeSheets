@@ -2,6 +2,7 @@
 <resources>
     <color name="bg_color">#ff949494</color>
     <color name="text_light">#ffefefef</color>
+    <color name="text_sky_blue">#ffdaeaea</color>
     <color name="text_light_blue">#ffcddddd</color>
     <color name="text_dark_gray">#ff505050</color>
     <color name="text_light_gray">#ffdddddd</color>

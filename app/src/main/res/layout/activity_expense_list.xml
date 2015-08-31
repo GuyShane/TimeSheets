@@ -18,24 +18,16 @@
         android:layout_alignParentStart="true"/>
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/image_button"
         android:id="@+id/button_add_expense"
         android:src="@drawable/selector_add"
-        android:background="#00000000"
-        android:paddingBottom="5dp"
         android:onClick="onClickAddExpense"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/image_button"
         android:id="@+id/button_menu"
         android:src="@drawable/selector_menu"
-        android:background="#00000000"
-        android:paddingBottom="5dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

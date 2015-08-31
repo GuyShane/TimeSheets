@@ -18,23 +18,16 @@
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/image_button"
         android:id="@+id/button_new_painter"
         android:src="@drawable/selector_new_painter"
-        android:background="#00000000"
-        android:paddingBottom="5dp"
         android:onClick="onClickNewPainter"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/image_button"
         android:id="@+id/button_menu"
         android:src="@drawable/selector_menu"
-        android:background="#00000000"
-        android:paddingBottom="5dp"
-        android:layout_alignParentBottom="true"
+        android:onClick="onClickMenu"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>

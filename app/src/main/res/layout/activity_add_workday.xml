@@ -11,17 +11,12 @@
         android:id="@+id/text_header" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/text_prompt"
         android:text="@string/string_date_prompt"
         android:id="@+id/text_date"
-        android:layout_below="@+id/text_header"
-        android:layout_marginStart="10dp"/>
+        android:layout_below="@+id/text_header"/>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/edit_date"
         style="@style/text_option"
         android:inputType="date"
@@ -37,24 +32,16 @@
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/image_button"
         android:id="@+id/button_check"
         android:onClick="onClickCheck"
         android:src="@drawable/selector_check"
-        android:background="#00000000"
-        android:paddingBottom="5dp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/image_button"
         android:id="@+id/button_menu"
         android:src="@drawable/selector_menu"
-        android:background="#00000000"
-        android:paddingBottom="5dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
 

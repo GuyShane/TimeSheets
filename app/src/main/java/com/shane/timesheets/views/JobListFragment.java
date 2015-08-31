@@ -150,6 +150,11 @@ public class JobListFragment extends Fragment {
                             case R.id.action_painters:
                                 Intent i = new Intent(getActivity(), PainterListActivity.class);
                                 startActivity(i);
+                                break;
+                            case R.id.action_help:
+                                HelpDialog help=new HelpDialog(getString(R.string.action_help_main));
+                                help.show(getActivity().getFragmentManager(),"Help Dialog");
+                                break;
                         }
                         return true;
                     }

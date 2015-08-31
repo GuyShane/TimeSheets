@@ -3,10 +3,13 @@ package com.shane.timesheets.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
 import com.shane.timesheets.DatabaseHelper;
 import com.shane.timesheets.IntentExtra;
@@ -55,5 +58,24 @@ public class PainterListActivity extends Activity {
     public void onClickNewPainter(View v) {
         Intent i = new Intent(PainterListActivity.this, NewPainterActivity.class);
         startActivity(i);
+    }
+
+    public void onClickMenu(View v) {
+        PopupMenu menu = new PopupMenu(getApplicationContext(), v, Gravity.END);
+        menu.getMenuInflater().inflate(R.menu.menu_painter_list, menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_help:
+                        HelpDialog help=new HelpDialog(
+                                getString(R.string.action_help_painter_list));
+                        help.show(getFragmentManager(),"Help Dialog");
+                        break;
+                }
+                return true;
+            }
+        });
+        menu.show();
     }
 }

@@ -22,7 +22,6 @@
         android:textSize="20sp"
         android:textColor="@color/text_light"
         android:id="@+id/text_name"
-        android:paddingTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_alignTop="@+id/check_painter"
         android:layout_toEndOf="@+id/check_painter"/>

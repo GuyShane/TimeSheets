@@ -21,16 +21,28 @@
 
     <style name="text_prompt">
         <item name="android:textSize">22sp</item>
-        <item name="android:textColor">#fffefefe</item>
-        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="text_option">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">#ffdaeaea</item>
+        <item name="android:textColor">@color/text_sky_blue</item>
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="image_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
     </style>
 
 </resources>
