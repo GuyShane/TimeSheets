@@ -2,7 +2,11 @@ package com.shane.timesheets.views;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.shane.timesheets.DatabaseHelper;
@@ -55,6 +59,28 @@ public class DayInfoActivity extends Activity {
         if (days.size()==1) {
             endText=getString(R.string.string_day_worked);
         }
-        daysText.setText(days.size()+endText);
+        daysText.setText(days.size() + endText);
+    }
+
+    public void onClickMenu(View v) {
+        PopupMenu menu = new PopupMenu(getApplicationContext(), v, Gravity.END);
+        menu.getMenuInflater().inflate(R.menu.menu_day_info, menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_help:
+                        HelpDialog help=new HelpDialog();
+                        Bundle args=new Bundle();
+                        args.putString(IntentExtra.HELP_MESSGAE,
+                                getString(R.string.action_help_day_info));
+                        help.setArguments(args);
+                        help.show(getFragmentManager(),"Help Dialog");
+                        break;
+                }
+                return true;
+            }
+        });
+        menu.show();
     }
 }

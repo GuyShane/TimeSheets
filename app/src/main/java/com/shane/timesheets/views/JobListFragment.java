@@ -152,7 +152,11 @@ public class JobListFragment extends Fragment {
                                 startActivity(i);
                                 break;
                             case R.id.action_help:
-                                HelpDialog help=new HelpDialog(getString(R.string.action_help_main));
+                                HelpDialog help=new HelpDialog();
+                                Bundle args=new Bundle();
+                                args.putString(IntentExtra.HELP_MESSGAE,
+                                        getString(R.string.action_help_main));
+                                help.setArguments(args);
                                 help.show(getActivity().getFragmentManager(),"Help Dialog");
                                 break;
                         }

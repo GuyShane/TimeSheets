@@ -68,8 +68,11 @@ public class PainterListActivity extends Activity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_help:
-                        HelpDialog help=new HelpDialog(
+                        HelpDialog help=new HelpDialog();
+                        Bundle args=new Bundle();
+                        args.putString(IntentExtra.HELP_MESSGAE,
                                 getString(R.string.action_help_painter_list));
+                        help.setArguments(args);
                         help.show(getFragmentManager(),"Help Dialog");
                         break;
                 }

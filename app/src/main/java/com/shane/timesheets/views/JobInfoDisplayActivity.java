@@ -163,14 +163,18 @@ public class JobInfoDisplayActivity extends Activity {
                 switch (item.getItemId()) {
                     case R.id.action_help:
                         HelpDialog help;
+                        Bundle args=new Bundle();
                         if (fromCompleted==1) {
-                            help=new HelpDialog(
+                            help=new HelpDialog();
+                            args.putString(IntentExtra.HELP_MESSGAE,
                                     getString(R.string.action_help_job_info_complete));
                         }
                         else {
-                            help=new HelpDialog(
+                            help=new HelpDialog();
+                            args.putString(IntentExtra.HELP_MESSGAE,
                                     getString(R.string.action_help_job_info_not_complete));
                         }
+                        help.setArguments(args);
                         help.show(getFragmentManager(),"Help Dialog");
                         break;
                 }

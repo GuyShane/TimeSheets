@@ -6,4 +6,5 @@ public class IntentExtra {
     public static final String PAINTER_ID="pid";
     public static final String FROM_COMPLETED="fc";
     public static final String EXPENSE_ID="eid";
+    public static final String HELP_MESSGAE="hm";
 }

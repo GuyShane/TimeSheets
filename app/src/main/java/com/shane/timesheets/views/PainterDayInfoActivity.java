@@ -2,9 +2,12 @@ package com.shane.timesheets.views;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.shane.timesheets.DatabaseHelper;
@@ -77,5 +80,27 @@ public class PainterDayInfoActivity extends Activity {
         painterDays.clear();
         painterDays.addAll(dbHelper.getPainterDays(jobId, painterId));
         adapter.notifyDataSetChanged();
+    }
+
+    public void onClickMenu(View v) {
+        PopupMenu menu = new PopupMenu(getApplicationContext(), v, Gravity.END);
+        menu.getMenuInflater().inflate(R.menu.menu_painter_day_info, menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_help:
+                        HelpDialog help=new HelpDialog();
+                        Bundle args=new Bundle();
+                        args.putString(IntentExtra.HELP_MESSGAE,
+                                getString(R.string.action_help_painter_days));
+                        help.setArguments(args);
+                        help.show(getFragmentManager(),"Help Dialog");
+                        break;
+                }
+                return true;
+            }
+        });
+        menu.show();
     }
 }

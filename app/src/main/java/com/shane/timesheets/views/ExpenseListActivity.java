@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
 import com.shane.timesheets.DatabaseHelper;
 import com.shane.timesheets.IntentExtra;
@@ -70,6 +72,36 @@ public class ExpenseListActivity extends Activity {
         Intent i=new Intent(ExpenseListActivity.this,NewExpenseActivity.class);
         i.putExtra(IntentExtra.JOB_ID, jobId);
         startActivity(i);
+    }
+
+    public void onClickMenu(View v) {
+        PopupMenu menu = new PopupMenu(getApplicationContext(), v, Gravity.END);
+        menu.getMenuInflater().inflate(R.menu.menu_expense_list, menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_help:
+                        HelpDialog help;
+                        Bundle args=new Bundle();
+                        if (fromCompleted==1) {
+                            help=new HelpDialog();
+                            args.putString(IntentExtra.HELP_MESSGAE,
+                                    getString(R.string.action_help_expenses_completed));
+                        }
+                        else {
+                            help=new HelpDialog();
+                            args.putString(IntentExtra.HELP_MESSGAE,
+                                    getString(R.string.action_help_expenses_not_completed));
+                        }
+                        help.setArguments(args);
+                        help.show(getFragmentManager(),"Help Dialog");
+                        break;
+                }
+                return true;
+            }
+        });
+        menu.show();
     }
 
     private void buttonBeGone() {
